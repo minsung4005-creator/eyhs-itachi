@@ -52,14 +52,67 @@
     .glow-rose {
       box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
     }
+    .glow-amber {
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+    }
     /* Minesweeper custom styling */
     .mine-cell {
       user-select: none;
       -webkit-user-select: none;
     }
+    /* Extreme Screen Shake for Jackpot */
+    @keyframes slot-shake {
+      0% { transform: translate(1px, 1px) rotate(0deg); }
+      10% { transform: translate(-2px, -3px) rotate(-1.5deg); }
+      20% { transform: translate(-4px, 0px) rotate(1.5deg); }
+      30% { transform: translate(0px, 3px) rotate(0deg); }
+      40% { transform: translate(2px, -1px) rotate(2deg); }
+      50% { transform: translate(-1px, 3px) rotate(-1.5deg); }
+      60% { transform: translate(-4px, 1px) rotate(0deg); }
+      75% { transform: translate(3px, 2px) rotate(-2.5deg); }
+      90% { transform: translate(-1px, -2px) rotate(1.5deg); }
+      100% { transform: translate(2px, -3px) rotate(0deg); }
+    }
+    .mega-shake {
+      animation: slot-shake 0.12s infinite !important;
+    }
+    /* Rainbow background flash for jackpot overlay */
+    @keyframes rainbow-flash {
+      0% { background-color: rgba(239, 68, 68, 0.85); }
+      20% { background-color: rgba(245, 158, 11, 0.85); }
+      40% { background-color: rgba(16, 185, 129, 0.85); }
+      60% { background-color: rgba(59, 130, 246, 0.85); }
+      80% { background-color: rgba(139, 92, 246, 0.85); }
+      100% { background-color: rgba(236, 72, 153, 0.85); }
+    }
+    .rainbow-strobe {
+      animation: rainbow-flash 0.2s infinite;
+    }
   </style>
 </head>
 <body class="bg-red-50 text-slate-900 dark:bg-[#150505] dark:text-red-50 min-h-screen selection:bg-red-500 selection:text-white overflow-x-hidden transition-colors duration-300">
+
+  <!-- Full Screen Jackpot Particle Canvas Overlay -->
+  <div id="jackpot-overlay" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center text-center p-4 pointer-events-none transition-all duration-300">
+    <canvas id="jackpot-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+    <div class="relative z-10 flex flex-col items-center justify-center p-8 bg-slate-950/90 rounded-3xl border-4 border-amber-500 glow-amber max-w-md pointer-events-auto transform scale-90 transition-transform duration-300" id="jackpot-modal">
+      <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-yellow-400 via-orange-500 to-red-600 flex items-center justify-center text-white text-5xl mb-4 animate-bounce glow-amber">
+        💎
+      </div>
+      <h2 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 uppercase tracking-widest animate-pulse">
+        JACKPOT!!!
+      </h2>
+      <h3 class="text-2xl font-black text-white mt-1">🎉 축하합니다! 대박 당첨! 🎉</h3>
+      <p class="text-amber-200 text-sm mt-3 leading-relaxed" id="jackpot-desc-text">
+        행운의 여신이 당신에게 찾아왔습니다! 슬롯 릴에 눈부신 <span class="font-bold text-white">💎 다이아몬드 3개</span>가 완벽히 정렬되었습니다!
+      </p>
+      <div class="mt-6 flex gap-3 w-full">
+        <button onclick="dismissJackpotOverlay()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 hover:from-amber-600 hover:to-red-700 text-slate-950 font-black text-sm rounded-xl shadow-lg transition-all glow-amber">
+          영광을 안고 돌아가기 <i class="fa-solid fa-crown ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Navigation Bar -->
   <nav class="fixed top-0 left-0 w-full z-40 bg-white/80 dark:bg-[#150505]/80 backdrop-blur-md border-b border-red-100 dark:border-red-950/40 transition-colors duration-300">
@@ -78,7 +131,7 @@
           <a href="#about" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">소개</a>
           <a href="#minesweeper" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-bomb text-red-500"></i> 지뢰찾기</a>
           <a href="#pachinko" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-circle-notch text-rose-500"></i> 빠칭코</a>
-          <a href="#roulette" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-life-ring text-amber-500"></i> 피버 룰렛</a>
+          <a href="#slot-machine" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-gem text-amber-500 animate-pulse"></i> 피버 슬롯머신</a>
           <a href="#projects" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">프로젝트</a>
           <a href="#skills" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">기술 스택</a>
           <a href="#timeline" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">활동 연혁</a>
@@ -106,7 +159,7 @@
       <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">소개</a>
       <a href="#minesweeper" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-bomb"></i> 지뢰찾기</a>
       <a href="#pachinko" class="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-red-50 dark:text-rose-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-circle-notch"></i> 빠칭코</a>
-      <a href="#roulette" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 hover:bg-red-50 dark:text-amber-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-life-ring"></i> 피버 룰렛</a>
+      <a href="#slot-machine" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 hover:bg-red-50 dark:text-amber-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-gem text-amber-500"></i> 피버 슬롯머신</a>
       <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">프로젝트</a>
       <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">기술 스택</a>
       <a href="#timeline" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">활동 연혁</a>
@@ -177,7 +230,7 @@
         </div>
         <div>
           <h4 class="font-black text-sm">통합 아케이드 아레나 코인 잔고</h4>
-          <p class="text-xs text-red-100">빠칭코 구슬 발사 및 피버 룰렛 스핀에 연동되어 연산됩니다!</p>
+          <p class="text-xs text-red-100">모든 미니게임의 플레이 비용 및 당첨 보너스 코인이 공유됩니다!</p>
         </div>
       </div>
       <div class="flex items-center gap-4">
@@ -321,69 +374,160 @@
     </div>
   </section>
 
-  <!-- Fever Roulette Section -->
-  <section id="roulette" class="max-w-4xl mx-auto px-4 py-12 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+  <!-- Pachinko Slot Machine Section -->
+  <section id="slot-machine" class="max-w-7xl mx-auto px-4 py-12 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
     <div class="text-center mb-8">
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 mb-2">
-        <i class="fa-solid fa-life-ring text-amber-500"></i> ARCADE 03
+        <i class="fa-solid fa-gem text-amber-500 animate-pulse"></i> ARCADE 03
       </span>
-      <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">피버 회전 룰렛</h2>
-      <p class="text-slate-500 dark:text-red-300/60 text-sm max-w-lg mx-auto">구슬치기와 별개로, 오직 룰렛 고유의 회전 관성 물리와 스릴을 즐기는 전용 스핀 룰렛 휠입니다!</p>
+      <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">파칭코 피버 슬롯머신 & 업그레이드 팩토리</h2>
+      <p class="text-slate-500 dark:text-red-300/60 text-sm max-w-lg mx-auto">전통 아케이드 릴 회전 기계입니다! 코인을 모아 기계를 영구 개조하고 초대형 대다중 잭팟을 완성하세요!</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white dark:bg-red-950/10 border border-red-200 dark:border-red-950/60 rounded-3xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
+    <!-- MAIN ARCADE ZONE GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-red-950/10 border border-red-200 dark:border-red-950/60 rounded-3xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300" id="slot-container">
       
-      <!-- Side Wheel Panel (1/3 cols) -->
-      <div class="md:col-span-1 flex flex-col justify-between gap-6 bg-amber-500/5 dark:bg-amber-500/5 border border-amber-500/10 dark:border-amber-500/20 p-5 rounded-2xl">
-        <div class="space-y-4">
-          <div class="text-xs font-bold text-amber-600 dark:text-amber-400/80 uppercase tracking-widest"><i class="fa-solid fa-star"></i> 룰렛 배당표</div>
+      <!-- Side Slot Panel (3/12 cols) -->
+      <div class="lg:col-span-3 flex flex-col justify-between gap-4 bg-amber-500/5 border border-amber-500/10 p-4 rounded-2xl">
+        <div class="space-y-3">
+          <div class="text-xs font-bold text-amber-600 dark:text-amber-400/80 uppercase tracking-widest"><i class="fa-solid fa-star"></i> 기본 배당 가이드</div>
           
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
-              <span class="font-bold text-yellow-500"><i class="fa-solid fa-gem mr-1"></i> 대박 💎</span>
-              <span class="font-mono text-white bg-amber-600 px-1.5 py-0.5 rounded font-black">+100 코인</span>
+          <div class="space-y-1.5 text-[11px]">
+            <div class="flex items-center justify-between p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 border border-amber-500/20">
+              <span class="font-bold text-yellow-500"><i class="fa-solid fa-gem mr-1"></i> 대박 💎💎💎</span>
+              <span class="font-mono text-white bg-amber-600 px-1.5 py-0.5 rounded font-black">+150 코인</span>
             </div>
-            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
-              <span class="font-bold text-purple-400"><i class="fa-solid fa-bolt mr-1"></i> 행운 🌟</span>
-              <span class="font-mono text-white bg-purple-600 px-1.5 py-0.5 rounded font-black">+50 코인</span>
+            <div class="flex items-center justify-between p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 border border-purple-500/10">
+              <span class="font-bold text-purple-400"><i class="fa-solid fa-star mr-1"></i> 행운 🌟🌟🌟</span>
+              <span class="font-mono text-white bg-purple-600 px-1.5 py-0.5 rounded font-black">+70 코인</span>
             </div>
-            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
-              <span class="font-bold text-cyan-500"><i class="fa-solid fa-coins mr-1"></i> 보너스 🪙</span>
-              <span class="font-mono text-white bg-cyan-600 px-1.5 py-0.5 rounded font-black">+30 코인</span>
+            <div class="flex items-center justify-between p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 border border-cyan-500/10">
+              <span class="font-bold text-cyan-500"><i class="fa-solid fa-coins mr-1"></i> 보너스 🪙🪙🪙</span>
+              <span class="font-mono text-white bg-cyan-600 px-1.5 py-0.5 rounded font-black">+40 코인</span>
             </div>
-            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
-              <span class="font-bold text-rose-500"><i class="fa-solid fa-apple-whole mr-1"></i> 체리 🍒</span>
-              <span class="font-mono text-white bg-rose-600 px-1.5 py-0.5 rounded font-black">+15 코인</span>
+            <div class="flex items-center justify-between p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 border border-rose-500/10">
+              <span class="font-bold text-rose-500"><i class="fa-solid fa-apple-whole mr-1"></i> 체리 🍒🍒🍒</span>
+              <span class="font-mono text-white bg-rose-600 px-1.5 py-0.5 rounded font-black">+20 코인</span>
             </div>
-            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 text-slate-500">
-              <span><i class="fa-solid fa-bomb mr-1"></i> 아쉬운 꽝 💣</span>
-              <span class="font-mono">0 코인</span>
+            <div class="flex items-center justify-between p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 text-slate-500">
+              <span>2개 일치 조합</span>
+              <span class="font-mono font-bold">+5 코인</span>
             </div>
           </div>
         </div>
 
         <div class="space-y-2 mt-4">
-          <div class="text-[10px] text-slate-400 text-center mb-1">회전 시 코인 15개가 차감됩니다.</div>
-          <button onclick="spinRouletteWheel()" id="spin-wheel-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm shadow-md transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-rotate animate-spin"></i> 룰렛 스핀 시작 (-15 코인)
+          <div class="text-[10px] text-slate-400 text-center mb-1">스핀 1회당 코인 15개가 소비됩니다.</div>
+          <button onclick="spinSlotMachine()" id="spin-slot-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 glow-amber border border-amber-400">
+            <i class="fa-solid fa-rotate animate-spin"></i> 슬롯 레버 당기기 (-15)
           </button>
         </div>
       </div>
 
-      <!-- Roulette Canvas Screen (2/3 cols) -->
-      <div class="md:col-span-2 flex flex-col items-center justify-center py-4">
-        <div class="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
-          <!-- Canvas Wheel element -->
-          <canvas id="roulette-canvas" width="320" height="320" class="block w-full h-auto bg-transparent"></canvas>
-          <!-- Beautiful Physical center pin -->
-          <div class="absolute w-8 h-8 rounded-full bg-slate-950 border-4 border-amber-500 flex items-center justify-center shadow-lg">
-            <div class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></div>
+      <!-- Slot Machine Canvas Screen (4/12 cols) -->
+      <div class="lg:col-span-4 flex flex-col items-center justify-center py-2 border-y lg:border-y-0 lg:border-x border-red-100 dark:border-red-950/40 px-4">
+        <!-- Frame representing a real golden chassis -->
+        <div class="relative w-full max-w-[280px] bg-gradient-to-b from-yellow-500 via-amber-600 to-yellow-700 p-3 rounded-3xl shadow-2xl border-4 border-yellow-400">
+          
+          <!-- Outer dynamic lighting bulbs around frame -->
+          <div class="absolute top-2 left-1/2 -translate-x-1/2 flex gap-3">
+            <div class="w-2 h-2 rounded-full bg-red-500 animate-ping"></div>
+            <div class="w-2 h-2 rounded-full bg-yellow-400 animate-ping delay-75"></div>
+            <div class="w-2 h-2 rounded-full bg-green-500 animate-ping delay-150"></div>
           </div>
-          <!-- Top pointer arrow -->
-          <div class="absolute -top-3 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[24px] border-l-transparent border-r-transparent border-t-red-600 drop-shadow-md z-10"></div>
+
+          <!-- The main game canvas screen representing 3 vertical reels -->
+          <div class="bg-slate-950 rounded-2xl border-4 border-slate-900 overflow-hidden relative">
+            <canvas id="slot-canvas" width="250" height="180" class="block w-full h-auto bg-slate-950"></canvas>
+            
+            <!-- Red horizontal payoff line -->
+            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-red-600/85 z-10 shadow-lg pointer-events-none"></div>
+            <!-- Win Line indicator tabs on sides -->
+            <div class="absolute top-1/2 -translate-y-1/2 left-1 w-2.5 h-4 bg-red-600 rounded-r z-10"></div>
+            <div class="absolute top-1/2 -translate-y-1/2 right-1 w-2.5 h-4 bg-red-600 rounded-l z-10"></div>
+          </div>
+
+          <!-- Bottom chassis decoration -->
+          <div class="mt-2.5 flex justify-between items-center px-3">
+            <div class="text-[9px] font-black text-slate-950 tracking-wider">PYCRAFT REEL SYSTEM V2.5</div>
+            <div class="flex gap-1">
+              <div class="w-2 h-2 rounded-full bg-slate-900 shadow border border-slate-700"></div>
+              <div class="w-2 h-2 rounded-full bg-slate-900 shadow border border-slate-700"></div>
+            </div>
+          </div>
+
         </div>
-        <div class="text-center text-xs font-black text-slate-700 dark:text-red-300/80 mt-4 min-h-[18px]" id="roulette-status-text">
-          버튼을 눌러 피버 룰렛을 작동시키세요!
+        <div class="text-center text-[11px] font-black text-slate-700 dark:text-red-300/80 mt-3 min-h-[30px]" id="slot-status-text">
+          코인을 투입해 슬롯머신 레버를 돌리거나 아래 팩토리에서 기계를 업그레이드하세요!
+        </div>
+      </div>
+
+      <!-- Upgrades Panel (5/12 cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-4 bg-red-500/5 border border-red-500/10 p-4 rounded-2xl">
+        <div class="flex items-center justify-between border-b border-red-200/20 pb-2">
+          <h4 class="text-xs font-black text-red-600 dark:text-red-400 tracking-wide flex items-center gap-1.5">
+            <i class="fa-solid fa-flask-vial animate-pulse"></i> PYCRAFT 피버 업그레이드 상점
+          </h4>
+          <span class="text-[10px] bg-red-500/20 text-red-600 dark:text-red-400 px-2 py-0.5 rounded font-bold">UPGRADE STATS</span>
+        </div>
+
+        <div class="space-y-3.5">
+          <!-- Speed Upgrade -->
+          <div class="bg-slate-950/20 dark:bg-slate-950/40 border border-red-100 dark:border-red-950/60 p-3 rounded-xl flex flex-col justify-between gap-2.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                  <i class="fa-solid fa-gauge-high text-amber-500"></i> 초고속 터보 엔진 <span class="text-[10px] text-amber-500 font-black" id="upg-speed-badge">Lv.0</span>
+                </h5>
+                <p class="text-[10px] text-slate-500 dark:text-red-300/60 mt-0.5">스핀 속도가 대폭 향상되고, 대기시간이 격감합니다.</p>
+              </div>
+              <button onclick="buyUpgrade('speed')" id="btn-upg-speed" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-[10px] shadow transition-all whitespace-nowrap">
+                구매 <span id="cost-upg-speed">40</span> 🪙
+              </button>
+            </div>
+            <!-- Progress gauge -->
+            <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2 rounded-full overflow-hidden">
+              <div id="gauge-upg-speed" class="bg-gradient-to-r from-amber-400 to-orange-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Probability Upgrade -->
+          <div class="bg-slate-950/20 dark:bg-slate-950/40 border border-red-100 dark:border-red-950/60 p-3 rounded-xl flex flex-col justify-between gap-2.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                  <i class="fa-solid fa-clover text-emerald-500 animate-bounce"></i> 포춘 럭스 (확률업) <span class="text-[10px] text-emerald-500 font-black" id="upg-probability-badge">Lv.0</span>
+                </h5>
+                <p class="text-[10px] text-slate-500 dark:text-red-300/60 mt-0.5">꽝 폭탄이 💎 및 🌟 보석 기호로 대체되어 확률이 영구 폭증합니다.</p>
+              </div>
+              <button onclick="buyUpgrade('probability')" id="btn-upg-probability" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black text-[10px] shadow transition-all whitespace-nowrap">
+                구매 <span id="cost-upg-probability">60</span> 🪙
+              </button>
+            </div>
+            <!-- Progress gauge -->
+            <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2 rounded-full overflow-hidden">
+              <div id="gauge-upg-probability" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Multi-roulette (Multiline) Upgrade -->
+          <div class="bg-slate-950/20 dark:bg-slate-950/40 border border-red-100 dark:border-red-950/60 p-3 rounded-xl flex flex-col justify-between gap-2.5">
+            <div class="flex justify-between items-start">
+              <div>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                  <i class="fa-solid fa-diagram-predecessor text-purple-500"></i> 다중 룰렛 페이라인 <span class="text-[10px] text-purple-500 font-black" id="upg-multiline-badge">Lv.0</span>
+                </h5>
+                <p class="text-[10px] text-slate-500 dark:text-red-300/60 mt-0.5">상하단 수평 라인 및 X자 대각선 라인까지 최대 5중 라인 판정을 해금합니다.</p>
+              </div>
+              <button onclick="buyUpgrade('multiline')" id="btn-upg-multiline" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600 text-white font-black text-[10px] shadow transition-all whitespace-nowrap">
+                구매 <span id="cost-upg-multiline">150</span> 🪙
+              </button>
+            </div>
+            <!-- Progress gauge -->
+            <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2 rounded-full overflow-hidden">
+              <div id="gauge-upg-multiline" class="bg-gradient-to-r from-purple-400 to-fuchsia-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -600,7 +744,7 @@
     </div>
   </div>
 
-  <!-- Smart Farm Modal -->
+  <!-- Smart Greenhouse Modal -->
   <div id="modal-smart-farm" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm px-4 hidden">
     <div class="bg-white dark:bg-[#1a0808] rounded-2xl border border-red-200 dark:border-red-900 w-full max-w-2xl overflow-hidden shadow-2xl transition-colors duration-300">
       <div class="p-6 border-b border-red-100 dark:border-red-950/40 flex justify-between items-center transition-colors duration-300">
@@ -1016,19 +1160,19 @@
       try {
         const actx = getAudioCtx();
         if (actx.state === 'suspended') actx.resume();
-        const scale = jackpot ? [523.25, 659.25, 783.99, 1046.50] : [261.63, 329.63, 392.00, 523.25];
+        const scale = jackpot ? [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00] : [261.63, 329.63, 392.00, 523.25];
         scale.forEach((freq, idx) => {
           setTimeout(() => {
             const osc = actx.createOscillator();
             const gain = actx.createGain();
             osc.frequency.setValueAtTime(freq, actx.currentTime);
             gain.gain.setValueAtTime(0.06, actx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.35);
+            gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.4);
             osc.connect(gain);
             gain.connect(actx.destination);
             osc.start();
-            osc.stop(actx.currentTime + 0.35);
-          }, idx * 90);
+            osc.stop(actx.currentTime + 0.4);
+          }, idx * (jackpot ? 70 : 90));
         });
       } catch(e) {}
     }
@@ -1276,142 +1420,527 @@
     }
 
     /* ==========================================================================
-       FEVER SPINNER ROULETTE WHEEL
+       STREAMING_CHUNK: Setting up the brand new 3-Reel Pachinko Slot Machine logic...
+       PACHINKO SLOT MACHINE GAME ENGINE
        ========================================================================== */
-    let rCanvas, rCtx;
-    let rAngle = 0;
-    let rSpeed = 0;
-    let rIsSpinning = false;
-    const rSegments = [
-      { name: "대박 💎", val: 100, color: "#eab308" },
-      { name: "꽝 💣", val: 0, color: "#1e293b" },
-      { name: "보너스 🪙", val: 30, color: "#06b6d4" },
-      { name: "꽝 💣", val: 0, color: "#1e293b" },
-      { name: "체리 🍒", val: 15, color: "#ec4899" },
-      { name: "꽝 💣", val: 0, color: "#1e293b" },
-      { name: "행운 🌟", val: 50, color: "#a855f7" },
-      { name: "꽝 💣", val: 0, color: "#1e293b" }
+    let sCanvas, sCtx;
+    
+    // Core upgrade states
+    let slotUpgrades = {
+      speed: 0,
+      probability: 0,
+      multiline: 0
+    };
+    const maxUpgradeLevels = { speed: 5, probability: 5, multiline: 3 };
+    const upgradeCosts = {
+      speed: [40, 80, 160, 320, 640],
+      probability: [60, 120, 240, 480, 960],
+      multiline: [150, 350, 750]
+    };
+
+    // Default basic symbols pattern on each column
+    const baseReelSymbols = [
+      ["💎", "🌟", "🪙", "🍒", "💣", "💎", "🍒", "🪙", "💣", "🌟"],
+      ["💣", "💎", "🪙", "🍒", "🌟", "💣", "💎", "🍒", "🌟", "🪙"],
+      ["🌟", "🪙", "💣", "🍒", "💎", "🌟", "💣", "💎", "🪙", "🍒"]
     ];
 
-    function initRouletteBoard() {
-      rCanvas = document.getElementById('roulette-canvas');
-      rCtx = rCanvas.getContext('2d');
-      drawRouletteWheel();
+    let sReels = [
+      { y: 0, speed: 0, symbols: [] },
+      { y: 0, speed: 0, symbols: [] },
+      { y: 0, speed: 0, symbols: [] }
+    ];
+    
+    let sIsSpinning = false;
+    let sSpinTimers = [];
+    const symbolHeight = 60;
+    const sWidth = 250;
+    const sHeight = 180;
+
+    function initSlotMachine() {
+      sCanvas = document.getElementById('slot-canvas');
+      sCtx = sCanvas.getContext('2d');
+      applyProbabilityUpgrade(); // Populates symbols and sets initial layout
+      updateUpgradeUI();
     }
 
-    function drawRouletteWheel() {
-      const cx = 160;
-      const cy = 160;
-      const r = 150;
-      const arc = (Math.PI * 2) / rSegments.length;
-
-      rCtx.clearRect(0, 0, 320, 320);
-
-      // Outer gold border ring
-      rCtx.beginPath();
-      rCtx.arc(cx, cy, r + 4, 0, Math.PI * 2);
-      rCtx.fillStyle = '#d97706';
-      rCtx.fill();
-
-      rSegments.forEach((seg, idx) => {
-        const startAng = rAngle + idx * arc;
-        const endAng = startAng + arc;
-
-        // Sector Segment draw
-        rCtx.beginPath();
-        rCtx.arc(cx, cy, r, startAng, endAng);
-        rCtx.lineTo(cx, cy);
-        rCtx.fillStyle = seg.color;
-        rCtx.fill();
-        rCtx.strokeStyle = '#ffffff33';
-        rCtx.lineWidth = 1.5;
-        rCtx.stroke();
-
-        // Label positioning
-        rCtx.save();
-        rCtx.translate(cx, cy);
-        rCtx.rotate(startAng + arc / 2);
-        rCtx.fillStyle = '#ffffff';
-        rCtx.font = 'black 11px monospace';
-        rCtx.textAlign = 'right';
-        rCtx.fillText(seg.name, r - 15, 4);
-        rCtx.restore();
+    function applyProbabilityUpgrade() {
+      const lvl = slotUpgrades.probability;
+      sReels.forEach((reel, rIdx) => {
+        // Deep copy from master array
+        reel.symbols = [...baseReelSymbols[rIdx]];
+        
+        // Transform low yield or hazard symbols to premium symbols based on Upgrade level
+        for (let i = 0; i < reel.symbols.length; i++) {
+          if (lvl >= 1 && reel.symbols[i] === "💣" && i % 2 === 0) {
+            reel.symbols[i] = "🍒"; // Replace half the bombs with cherries
+          }
+          if (lvl >= 2 && reel.symbols[i] === "💣") {
+            reel.symbols[i] = "🪙"; // Eradicate remaining bombs and install Gold Coins
+          }
+          if (lvl >= 3 && reel.symbols[i] === "🍒" && i % 3 === 0) {
+            reel.symbols[i] = "🌟"; // Morph common cherries into brilliant Stars
+          }
+          if (lvl >= 4 && reel.symbols[i] === "🪙" && i % 2 === 0) {
+            reel.symbols[i] = "💎"; // Transform coins into pristine Diamonds
+          }
+          if (lvl >= 5) {
+            // Level 5 Ultimate: Convert ALL low symbols to premium Diamonds or Stars!
+            if (reel.symbols[i] === "🍒" || reel.symbols[i] === "🪙" || reel.symbols[i] === "💣") {
+              reel.symbols[i] = Math.random() > 0.4 ? "💎" : "🌟";
+            }
+          }
+        }
       });
+      drawSlotReels();
     }
 
-    function spinRouletteWheel() {
-      if (rIsSpinning) return;
+    function drawSlotReels() {
+      sCtx.fillStyle = '#020617'; // slate-950
+      sCtx.fillRect(0, 0, sWidth, sHeight);
+
+      const colWidth = sWidth / 3;
+
+      for (let i = 0; i < 3; i++) {
+        const reel = sReels[i];
+        const rx = i * colWidth;
+
+        sCtx.save();
+        // Create clipping region for each reel column
+        sCtx.beginPath();
+        sCtx.rect(rx + 5, 5, colWidth - 10, sHeight - 10);
+        sCtx.clip();
+
+        // Draw inner reel background
+        sCtx.fillStyle = '#0f172a'; // slate-900
+        sCtx.fillRect(rx + 5, 5, colWidth - 10, sHeight - 10);
+
+        // Calculate continuous offset drawing
+        const numSymbols = reel.symbols.length;
+        
+        let startIdx = Math.floor(reel.y / symbolHeight) % numSymbols;
+        if (startIdx < 0) startIdx += numSymbols;
+
+        // Render visible emojis along the column with offset
+        for (let j = -1; j < 4; j++) {
+          const symIdx = (startIdx + j + numSymbols) % numSymbols;
+          const emoji = reel.symbols[symIdx];
+          const ey = (j * symbolHeight) - (reel.y % symbolHeight) + (sHeight / 2) - (symbolHeight / 2);
+
+          sCtx.font = '28px sans-serif';
+          sCtx.textAlign = 'center';
+          sCtx.textBaseline = 'middle';
+          
+          // Apply motion blur effect when speed is high
+          if (reel.speed > 5) {
+            sCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            sCtx.fillText(emoji, rx + colWidth / 2, ey - 4);
+            sCtx.fillText(emoji, rx + colWidth / 2, ey + 4);
+          }
+          
+          sCtx.fillStyle = '#ffffff';
+          sCtx.fillText(emoji, rx + colWidth / 2, ey);
+        }
+
+        sCtx.restore();
+
+        // Draw separator borders between slots
+        sCtx.strokeStyle = '#d97706'; // amber border line
+        sCtx.lineWidth = 2;
+        sCtx.strokeRect(rx + 4, 5, colWidth - 8, sHeight - 10);
+      }
+
+      // Draw active paylines visually if not spinning so user can see their upgrades active!
+      if (!sIsSpinning) {
+        sCtx.lineWidth = 2;
+        
+        // 1. Center Line (Always active)
+        sCtx.strokeStyle = "rgba(239, 68, 68, 0.8)";
+        sCtx.beginPath();
+        sCtx.moveTo(0, sHeight / 2);
+        sCtx.lineTo(sWidth, sHeight / 2);
+        sCtx.stroke();
+
+        // 2. Multiline Level 1 (Top and Bottom horizontal lines)
+        if (slotUpgrades.multiline >= 1) {
+          sCtx.strokeStyle = "rgba(34, 197, 94, 0.75)"; // Green lines
+          sCtx.beginPath();
+          sCtx.moveTo(0, sHeight / 2 - 45);
+          sCtx.lineTo(sWidth, sHeight / 2 - 45);
+          sCtx.moveTo(0, sHeight / 2 + 45);
+          sCtx.lineTo(sWidth, sHeight / 2 + 45);
+          sCtx.stroke();
+        }
+
+        // 3. Multiline Level 2 (X-shaped diagonal lines)
+        if (slotUpgrades.multiline >= 2) {
+          sCtx.strokeStyle = "rgba(168, 85, 247, 0.75)"; // Purple diagonals
+          sCtx.beginPath();
+          sCtx.moveTo(10, 20);
+          sCtx.lineTo(sWidth - 10, sHeight - 20);
+          sCtx.moveTo(10, sHeight - 20);
+          sCtx.lineTo(sWidth - 10, 20);
+          sCtx.stroke();
+        }
+      }
+    }
+
+    function spinSlotMachine() {
+      if (sIsSpinning) return;
       if (globalCoins < 15) {
-        showToast("코인이 부족합니다! 충전 단추를 누르세요.");
+        showToast("코인이 부족합니다! 100코인 충전 단추를 누르세요.");
         return;
       }
 
       globalCoins -= 15;
       updateGlobalCoinsUI();
-      rIsSpinning = true;
+      sIsSpinning = true;
 
-      // Random high initial speed
-      rSpeed = 0.4 + Math.random() * 0.3; 
-      document.getElementById('roulette-status-text').className = "text-center text-xs font-black text-amber-500 animate-pulse mt-4 min-h-[18px]";
-      document.getElementById('roulette-status-text').innerText = "⚡ 피버 룰렛 회전 중!! 과연 결과는?";
+      // Adjust button state
+      document.getElementById('spin-slot-btn').disabled = true;
+      const statusText = document.getElementById('slot-status-text');
+      statusText.className = "text-center text-xs font-black text-amber-500 animate-pulse mt-4 min-h-[30px]";
+      statusText.innerText = "⚡ 피버 슬롯 가속 회전 중!! 과연 결과는?";
 
-      animateRouletteSpin();
+      // Base speed variables + speed upgrade booster
+      const speedMultiplier = 1 + (slotUpgrades.speed * 0.45);
+      sReels[0].speed = (30 + Math.random() * 8) * speedMultiplier;
+      sReels[1].speed = (35 + Math.random() * 8) * speedMultiplier;
+      sReels[2].speed = (40 + Math.random() * 8) * speedMultiplier;
+
+      // Plan stopping order (Decelerates much faster with speed upgrades!)
+      const baseDelay = 1500 - (slotUpgrades.speed * 200); // Level 5 stops almost instantly
+      sSpinTimers = [];
+      sSpinTimers.push(setTimeout(() => stopSingleReel(0), baseDelay));
+      sSpinTimers.push(setTimeout(() => stopSingleReel(1), baseDelay + 400));
+      sSpinTimers.push(setTimeout(() => stopSingleReel(2), baseDelay + 800));
+
+      animateSlotLoop();
     }
 
-    function animateRouletteSpin() {
-      rAngle += rSpeed;
-      rSpeed *= 0.982; // exponential deceleration
+    function animateSlotLoop() {
+      if (!sIsSpinning) return;
 
-      // Sound trigger based on angle segments
-      if (Math.abs(rSpeed) > 0.015) {
-        const segCount = rSegments.length;
-        const currentSegIdx = Math.floor((rAngle % (Math.PI * 2)) / ((Math.PI * 2) / segCount));
-        if (window.prevSegIdx !== currentSegIdx) {
-          playBeep(1200, 0.02);
-          window.prevSegIdx = currentSegIdx;
+      let stillMoving = false;
+      const friction = 0.982 - (slotUpgrades.speed * 0.004); // Higher speed means tighter stops
+
+      for (let i = 0; i < 3; i++) {
+        const reel = sReels[i];
+        if (reel.speed > 0) {
+          reel.y += reel.speed;
+          reel.speed *= friction;
+          
+          if (reel.speed < 1.5) {
+            // Snap lock to nearest symbol index
+            reel.speed = 0;
+            reel.y = Math.round(reel.y / symbolHeight) * symbolHeight;
+            playBeep(1100, 0.08); // Lock audio snap
+          } else {
+            stillMoving = true;
+          }
         }
       }
 
-      drawRouletteWheel();
+      drawSlotReels();
 
-      if (rSpeed < 0.002) {
-        // Halt and evaluate target
-        rSpeed = 0;
-        rIsSpinning = false;
-        evaluateRouletteResult();
+      if (stillMoving) {
+        requestAnimationFrame(animateSlotLoop);
       } else {
-        requestAnimationFrame(animateRouletteSpin);
+        sIsSpinning = false;
+        document.getElementById('spin-slot-btn').disabled = false;
+        evaluateSlotResult();
       }
     }
 
-    function evaluateRouletteResult() {
-      const statusText = document.getElementById('roulette-status-text');
-      statusText.className = "text-center text-xs font-black mt-4 min-h-[18px] ";
+    function stopSingleReel(reelIdx) {
+      // Promptly decelerate the reel to initiate locking
+      sReels[reelIdx].speed = 10;
+    }
 
-      // Center pointer is at top (-90 deg or 1.5 * PI)
-      // Angle goes clockwise. Calculate segment relative to 12 o'clock position (1.5 * PI)
-      const arc = (Math.PI * 2) / rSegments.length;
+    function getReelSymbolAtOffset(reelIdx, offset) {
+      const reel = sReels[reelIdx];
+      const numSymbols = reel.symbols.length;
+      let centerIdx = Math.round(reel.y / symbolHeight) % numSymbols;
+      if (centerIdx < 0) centerIdx += numSymbols;
       
-      // Normalized offset rotation
-      let normAngle = (1.5 * Math.PI - rAngle) % (Math.PI * 2);
-      if (normAngle < 0) normAngle += Math.PI * 2;
+      let targetIdx = (centerIdx + offset + numSymbols) % numSymbols;
+      return reel.symbols[targetIdx];
+    }
 
-      const winningIndex = Math.floor(normAngle / arc) % rSegments.length;
-      const result = rSegments[winningIndex];
+    function evaluateSlotResult() {
+      const statusText = document.getElementById('slot-status-text');
+      statusText.className = "text-center text-xs font-black mt-4 min-h-[30px]";
 
-      if (result.val > 0) {
-        globalCoins += result.val;
-        updateGlobalCoinsUI();
-        playFanfare(result.val >= 100);
-        statusText.className += "text-emerald-500 animate-bounce";
-        statusText.innerText = `🎉 축하합니다! ${result.name} 당첨! +${result.val} 코인 수령!`;
-        showToast(`${result.name} 당첨으로 ${result.val} 코인 충전 완료!`);
-      } else {
-        playBeep(200, 0.4);
-        statusText.className += "text-slate-400";
-        statusText.innerText = "💣 아쉬운 꽝! 다시 잭팟에 도전해 보세요!";
-        showToast("다음 찬스에 꼭 당첨되시길 바랍니다!");
+      // Determine active paylines based on Upgrade levels
+      let linesToEvaluate = [];
+      linesToEvaluate.push({ name: "중앙 라인 (Center)", offsets: [0, 0, 0], color: "rgba(239, 68, 68, 0.85)" });
+      
+      if (slotUpgrades.multiline >= 1) {
+        linesToEvaluate.push({ name: "상단 라인 (Top)", offsets: [-1, -1, -1], color: "rgba(34, 197, 94, 0.85)" });
+        linesToEvaluate.push({ name: "하단 라인 (Bottom)", offsets: [1, 1, 1], color: "rgba(59, 130, 246, 0.85)" });
       }
+      if (slotUpgrades.multiline >= 2) {
+        linesToEvaluate.push({ name: "대각선 우하향 (↘)", offsets: [-1, 0, 1], color: "rgba(168, 85, 247, 0.85)" });
+        linesToEvaluate.push({ name: "대각선 우상향 (↗)", offsets: [1, 0, -1], color: "rgba(236, 72, 153, 0.85)" });
+      }
+
+      let totalPayout = 0;
+      let winningSummary = [];
+      let megaJackpotHit = false;
+
+      // Evaluate each active payline separately
+      linesToEvaluate.forEach(line => {
+        const s1 = getReelSymbolAtOffset(0, line.offsets[0]);
+        const s2 = getReelSymbolAtOffset(1, line.offsets[1]);
+        const s3 = getReelSymbolAtOffset(2, line.offsets[2]);
+
+        let payout = 0;
+        if (s1 === "💎" && s2 === "💎" && s3 === "💎") {
+          payout = 150;
+          megaJackpotHit = true;
+          winningSummary.push(`[${line.name}: 💎 트리플 잭팟!]`);
+        } else if (s1 === s2 && s2 === s3) {
+          if (s1 === "🌟") { payout = 70; winningSummary.push(`[${line.name}: 🌟 행운 삼중합체!]`); }
+          else if (s1 === "🪙") { payout = 40; winningSummary.push(`[${line.name}: 🪙 코인 삼중합체!]`); }
+          else if (s1 === "🍒") { payout = 20; winningSummary.push(`[${line.name}: 🍒 체리 삼중합체!]`); }
+          else if (s1 === "💣") { payout = 0; winningSummary.push(`[${line.name}: 💣 꽝 폭탄 세 개...]`); }
+        } else if (s1 === s2 || s2 === s3 || s1 === s3) {
+          payout = 5;
+          winningSummary.push(`[${line.name}: 더블 매치]`);
+        }
+
+        totalPayout += payout;
+      });
+
+      // Multiline level 3 applies a 1.5x mega global fever multiplier to all winnings!
+      if (slotUpgrades.multiline >= 3 && totalPayout > 0) {
+        totalPayout = Math.round(totalPayout * 1.5);
+        winningSummary.push(`🔥 [피버마스터 1.5배 보너스 증폭!]`);
+      }
+
+      console.log("Calculated multi-pay results:", winningSummary, "Total coins earned:", totalPayout);
+
+      // Trigger respective visual/audio feedback
+      if (megaJackpotHit) {
+        globalCoins += totalPayout;
+        updateGlobalCoinsUI();
+        triggerMegaJackpotImpact(totalPayout);
+        statusText.className += " text-emerald-500 animate-bounce";
+        statusText.innerText = `💎 대박 트리플 잭팟 폭발!!! 💎 총 +${totalPayout} 코인 획득!`;
+      } else if (totalPayout > 0) {
+        globalCoins += totalPayout;
+        updateGlobalCoinsUI();
+        playFanfare(false);
+        statusText.className += " text-yellow-500 animate-pulse";
+        statusText.innerText = `🎉 축하합니다! ${winningSummary.join(", ")} 당첨! 총 +${totalPayout} 코인 수령!`;
+        showToast(`성공! +${totalPayout} 코인을 수령했습니다.`);
+      } else {
+        playBeep(240, 0.35);
+        statusText.className += " text-slate-400";
+        statusText.innerText = "💣 아쉽게 빗나갔습니다! 다시 한 번 피버 잭팟을 조준하세요!";
+      }
+
+      drawSlotReels(); // Redraw paylines in resting state
+    }
+
+    function buyUpgrade(type) {
+      const currentLvl = slotUpgrades[type];
+      if (currentLvl >= maxUpgradeLevels[type]) {
+        showToast("이미 최대 업그레이드 레벨에 도달했습니다!");
+        return;
+      }
+
+      const cost = upgradeCosts[type][currentLvl];
+      if (globalCoins < cost) {
+        showToast("코인이 부족합니다! 미니게임으로 코인을 수급하거나 충전하세요.");
+        return;
+      }
+
+      globalCoins -= cost;
+      slotUpgrades[type]++;
+
+      // Update calculations immediately
+      if (type === 'probability') {
+        applyProbabilityUpgrade();
+      } else {
+        drawSlotReels();
+      }
+
+      updateGlobalCoinsUI();
+      updateUpgradeUI();
+      playBeep(880, 0.25);
+      showToast(`${getUpgradeName(type)} 업그레이드 완료 (Lv.${slotUpgrades[type]})!`);
+    }
+
+    function getUpgradeName(type) {
+      const names = { speed: "초고속 터보 엔진", probability: "포춘 럭스 확률업", multiline: "다중 룰렛 페이라인" };
+      return names[type] || type;
+    }
+
+    function updateUpgradeUI() {
+      // Speed upgrade elements
+      const sLvl = slotUpgrades.speed;
+      document.getElementById('upg-speed-badge').innerText = `Lv.${sLvl}` + (sLvl === maxUpgradeLevels.speed ? " (MAX)" : "");
+      document.getElementById('gauge-upg-speed').style.width = `${(sLvl / maxUpgradeLevels.speed) * 100}%`;
+      if (sLvl < maxUpgradeLevels.speed) {
+        document.getElementById('cost-upg-speed').innerText = upgradeCosts.speed[sLvl];
+      } else {
+        document.getElementById('btn-upg-speed').disabled = true;
+        document.getElementById('btn-upg-speed').innerText = "최대 레벨";
+        document.getElementById('btn-upg-speed').className = "px-3 py-1.5 rounded-lg bg-slate-300 text-slate-500 font-bold text-[10px] cursor-not-allowed";
+      }
+
+      // Probability upgrade elements
+      const pLvl = slotUpgrades.probability;
+      document.getElementById('upg-probability-badge').innerText = `Lv.${pLvl}` + (pLvl === maxUpgradeLevels.probability ? " (MAX)" : "");
+      document.getElementById('gauge-upg-probability').style.width = `${(pLvl / maxUpgradeLevels.probability) * 100}%`;
+      if (pLvl < maxUpgradeLevels.probability) {
+        document.getElementById('cost-upg-probability').innerText = upgradeCosts.probability[pLvl];
+      } else {
+        document.getElementById('btn-upg-probability').disabled = true;
+        document.getElementById('btn-upg-probability').innerText = "최대 레벨";
+        document.getElementById('btn-upg-probability').className = "px-3 py-1.5 rounded-lg bg-slate-300 text-slate-500 font-bold text-[10px] cursor-not-allowed";
+      }
+
+      // Multiline upgrade elements
+      const mLvl = slotUpgrades.multiline;
+      document.getElementById('upg-multiline-badge').innerText = `Lv.${mLvl}` + (mLvl === maxUpgradeLevels.multiline ? " (MAX)" : "");
+      document.getElementById('gauge-upg-multiline').style.width = `${(mLvl / maxUpgradeLevels.multiline) * 100}%`;
+      if (mLvl < maxUpgradeLevels.multiline) {
+        document.getElementById('cost-upg-multiline').innerText = upgradeCosts.multiline[mLvl];
+      } else {
+        document.getElementById('btn-upg-multiline').disabled = true;
+        document.getElementById('btn-upg-multiline').innerText = "최대 레벨";
+        document.getElementById('btn-upg-multiline').className = "px-3 py-1.5 rounded-lg bg-slate-300 text-slate-500 font-bold text-[10px] cursor-not-allowed";
+      }
+    }
+
+    /* ==========================================================================
+       JACKPOT MEGA VISUAL EFFECTS ENGINE (PARTICLES & SCREEN SHAKE)
+       ========================================================================== */
+    let jOverlay, jCanvas, jCtx;
+    let jParticles = [];
+    let jActive = false;
+    let jAnimId = null;
+
+    function triggerMegaJackpotImpact(customPayout) {
+      playFanfare(true);
+      playFanfare(true); // Double overlay audio density
+
+      jOverlay = document.getElementById('jackpot-overlay');
+      jCanvas = document.getElementById('jackpot-canvas');
+      jCtx = jCanvas.getContext('2d');
+
+      // Adjust canvas to match full-window boundaries
+      resizeJackpotCanvas();
+      window.addEventListener('resize', resizeJackpotCanvas);
+
+      document.getElementById('jackpot-desc-text').innerHTML = `
+        행운의 여신이 당신에게 찾아왔습니다! 슬롯 릴에 눈부신 <span class="font-bold text-white">💎 다이아몬드 3개</span>가 완벽히 정렬되어 초대형 보상 <span class="font-mono font-bold text-yellow-300 text-lg">+${customPayout} 코인</span>을 획득했습니다!
+      `;
+
+      jOverlay.classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('jackpot-modal').classList.remove('scale-90');
+        document.getElementById('jackpot-modal').classList.add('scale-100');
+      }, 50);
+
+      // Trigger violent screen shake on container
+      document.getElementById('slot-container').classList.add('mega-shake');
+      // Trigger rainbow strobe flash
+      jOverlay.classList.add('rainbow-strobe');
+
+      // Spawn 200 rich color burst particles
+      jParticles = [];
+      const colors = ['#f59e0b', '#eab308', '#f43f5e', '#ec4899', '#3b82f6', '#10b981', '#a855f7'];
+      for (let i = 0; i < 200; i++) {
+        jParticles.push({
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+          vx: (Math.random() - 0.5) * 15,
+          vy: - (5 + Math.random() * 15),
+          r: 4 + Math.random() * 12,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          gravity: 0.3,
+          alpha: 1,
+          shape: Math.random() > 0.5 ? 'coin' : 'star'
+        });
+      }
+
+      jActive = true;
+      animateJackpotParticles();
+
+      // Automatically release screen shake after 3.5 seconds to ease CPU
+      setTimeout(() => {
+        document.getElementById('slot-container').classList.remove('mega-shake');
+      }, 3500);
+    }
+
+    function resizeJackpotCanvas() {
+      if (jCanvas) {
+        jCanvas.width = window.innerWidth;
+        jCanvas.height = window.innerHeight;
+      }
+    }
+
+    function animateJackpotParticles() {
+      if (!jActive) return;
+
+      jCtx.clearRect(0, 0, jCanvas.width, jCanvas.height);
+
+      let alive = false;
+      jParticles.forEach(p => {
+        if (p.alpha <= 0) return;
+
+        p.vy += p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.006; // Gradual fade
+
+        if (p.alpha > 0) alive = true;
+
+        jCtx.save();
+        jCtx.globalAlpha = p.alpha;
+        jCtx.fillStyle = p.color;
+        jCtx.shadowColor = p.color;
+        jCtx.shadowBlur = 8;
+
+        if (p.shape === 'coin') {
+          // Draw spinning round coins
+          jCtx.beginPath();
+          jCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          jCtx.fill();
+        } else {
+          // Draw glorious glowing stars
+          jCtx.beginPath();
+          for (let i = 0; i < 5; i++) {
+            jCtx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * p.r + p.x, -Math.sin((18 + i * 72) * Math.PI / 180) * p.r + p.y);
+            jCtx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (p.r / 2) + p.x, -Math.sin((54 + i * 72) * Math.PI / 180) * (p.r / 2) + p.y);
+          }
+          jCtx.closePath();
+          jCtx.fill();
+        }
+        jCtx.restore();
+      });
+
+      if (alive) {
+        jAnimId = requestAnimationFrame(animateJackpotParticles);
+      } else {
+        jActive = false;
+      }
+    }
+
+    function dismissJackpotOverlay() {
+      document.getElementById('jackpot-modal').classList.add('scale-90');
+      document.getElementById('jackpot-modal').classList.remove('scale-100');
+      
+      setTimeout(() => {
+        jOverlay.classList.add('hidden');
+        jOverlay.classList.remove('rainbow-strobe');
+        document.getElementById('slot-container').classList.remove('mega-shake');
+        jActive = false;
+        cancelAnimationFrame(jAnimId);
+      }, 250);
     }
 
     /* ==========================================================================
@@ -1511,6 +2040,7 @@
             neighborCount: 0
           });
         }
+        row.push(); // Boundary lock helper
         board.push(row);
       }
 
@@ -1874,3 +2404,28 @@
       } else {
         themeIcon.classList.add('fa-sun');
         themeIconMobile.classList.add('fa-sun');
+      }
+    }
+
+    /* ==========================================================================
+       INITIALIZATION CALLS
+       ========================================================================== */
+    window.onload = function() {
+      initThemeIcons();
+      animateValue(document.getElementById("stat-project"), 0, 8, 1500);
+      animateValue(document.getElementById("stat-hours"), 0, 120, 1500);
+      animateValue(document.getElementById("stat-commits"), 0, 312, 1500);
+
+      // Game Init
+      resetMinesweeper();
+      
+      initPachinkoBoard();
+      runPachinkoGameLoop();
+
+      initSlotMachine();
+
+      renderComments();
+    };
+  </script>
+</body>
+</html>
