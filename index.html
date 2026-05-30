@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>파이크래프트 - 언양고 정보동아리 포트폴리오</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons for Visuals -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts (Noto Sans KR for Clean Korean Text) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+    
+    // Execute theme initialization immediately to prevent flashing on load
+    (function() {
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        // Default is dark mode to preserve original premium dark aesthetic
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      scroll-behavior: smooth;
+    }
+    /* Custom Scrollbar for smooth modern look */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #991b1b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b91c1c;
+    }
+    /* Glow effect utility matching RED theme */
+    .glow-red {
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+    .glow-rose {
+      box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+    }
+    /* Minesweeper custom styling */
+    .mine-cell {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+  </style>
+</head>
+<body class="bg-red-50 text-slate-900 dark:bg-[#150505] dark:text-red-50 min-h-screen selection:bg-red-500 selection:text-white overflow-x-hidden transition-colors duration-300">
+
+  <!-- Navigation Bar -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-white/80 dark:bg-[#150505]/80 backdrop-blur-md border-b border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-red-600 to-rose-500 flex items-center justify-center font-black text-white text-lg tracking-wider glow-red">
+            PY
+          </div>
+          <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-red-500 to-rose-500 dark:from-red-400 dark:to-rose-400 bg-clip-text text-transparent">
+            파이크래프트 Portfolio
+          </span>
+        </div>
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-5">
+          <a href="#about" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">소개</a>
+          <a href="#minesweeper" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-bomb text-red-500"></i> 지뢰찾기</a>
+          <a href="#pachinko" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-circle-notch text-rose-500"></i> 빠칭코</a>
+          <a href="#roulette" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium flex items-center gap-1"><i class="fa-solid fa-life-ring text-amber-500"></i> 피버 룰렛</a>
+          <a href="#projects" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">프로젝트</a>
+          <a href="#skills" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">기술 스택</a>
+          <a href="#timeline" class="text-slate-600 hover:text-red-500 dark:text-red-200 dark:hover:text-red-400 transition-colors text-xs font-medium">활동 연혁</a>
+          
+          <!-- Theme Toggle Button Desktop -->
+          <button id="theme-toggle" class="p-2 rounded-xl bg-red-100/50 hover:bg-red-100 dark:bg-red-950/40 dark:hover:bg-red-900/40 text-red-700 dark:text-red-300 transition-colors focus:outline-none" aria-label="Toggle Theme">
+            <i class="fa-solid" id="theme-icon"></i>
+          </button>
+          
+          <a href="#guestbook" class="px-3.5 py-1.5 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-950/50 dark:hover:bg-red-900/50 dark:text-red-400 border border-red-500/30 text-xs font-semibold transition-all">방명록</a>
+        </div>
+        <!-- Mobile Nav Hamburger & Mobile Theme Toggle -->
+        <div class="flex items-center gap-3 lg:hidden">
+          <button id="theme-toggle-mobile" class="p-2 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950 focus:outline-none" aria-label="Toggle Theme Mobile">
+            <i class="fa-solid" id="theme-icon-mobile"></i>
+          </button>
+          <button id="mobile-menu-btn" class="text-slate-600 dark:text-red-400 hover:text-slate-900 dark:hover:text-white focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-[#150505] border-b border-red-100 dark:border-red-950/40 px-4 pt-2 pb-4 space-y-2 transition-colors duration-300">
+      <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">소개</a>
+      <a href="#minesweeper" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-bomb"></i> 지뢰찾기</a>
+      <a href="#pachinko" class="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-red-50 dark:text-rose-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-circle-notch"></i> 빠칭코</a>
+      <a href="#roulette" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 hover:bg-red-50 dark:text-amber-400 dark:hover:bg-red-950/60"><i class="fa-solid fa-life-ring"></i> 피버 룰렛</a>
+      <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">프로젝트</a>
+      <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">기술 스택</a>
+      <a href="#timeline" class="block px-3 py-2 rounded-md text-base font-medium text-slate-600 hover:bg-red-50 hover:text-red-500 dark:text-red-200 dark:hover:bg-red-950/60 dark:hover:text-red-400">활동 연혁</a>
+      <a href="#guestbook" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 bg-red-100 dark:text-red-400 dark:bg-red-950/50">방명록</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Welcome) -->
+  <section id="about" class="relative pt-32 pb-20 md:py-40 flex items-center justify-center overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full filter blur-[100px]"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-rose-600/10 rounded-full filter blur-[100px]"></div>
+
+    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+      <!-- High school badge -->
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-500/30 text-red-600 dark:text-red-400 mb-6 uppercase tracking-wider">
+        <i class="fa-solid fa-graduation-cap"></i> 언양고등학교 2학년 정보동아리
+      </span>
+      <h1 class="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight text-slate-900 dark:text-white">
+        새로운 가치를 코딩하는<br>
+        <span class="bg-gradient-to-r from-red-500 via-rose-500 to-red-700 dark:from-red-400 dark:via-rose-400 dark:to-red-500 bg-clip-text text-transparent">
+          파이크래프트
+        </span> 입니다.
+      </h1>
+      <p class="text-slate-600 dark:text-red-200/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+        컴퓨터를 통해 일상의 문제를 해결하고, 아이디어를 직접 작동하는 결과물로 구현하는 것을 즐깁니다. 아래에서 동아리 성과와 함께 탑재된 미니게임들도 플레이해 보세요!
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#minesweeper" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 font-bold text-white transition-all glow-red text-center">
+          지뢰찾기 한판 대결 <i class="fa-solid fa-bomb ml-2 animate-bounce"></i>
+        </a>
+        <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-red-100 dark:bg-red-950/40 hover:bg-red-200 dark:hover:bg-red-900/40 font-bold text-red-700 dark:text-red-300 border border-red-300 dark:border-red-800 transition-all text-center">
+          프로젝트 둘러보기
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Fast-Stats Board -->
+  <section class="max-w-7xl mx-auto px-4 mb-24">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl bg-white/80 dark:bg-red-950/20 border border-red-100 dark:border-red-950/40 backdrop-blur-sm shadow-md dark:shadow-none transition-colors duration-300">
+      <div class="text-center p-4">
+        <div class="text-3xl sm:text-4xl font-extrabold text-red-600 dark:text-red-400 mb-1" id="stat-project">0</div>
+        <div class="text-xs sm:text-sm text-slate-500 dark:text-red-300/60">완료한 토이 프로젝트</div>
+      </div>
+      <div class="text-center p-4 border-l border-red-100 dark:border-red-950/40 transition-colors duration-300">
+        <div class="text-3xl sm:text-4xl font-extrabold text-rose-600 dark:text-rose-400 mb-1" id="stat-hours">0</div>
+        <div class="text-xs sm:text-sm text-slate-500 dark:text-red-300/60">동아리 실습 시간</div>
+      </div>
+      <div class="text-center p-4 border-l border-red-100 dark:border-red-950/40 transition-colors duration-300">
+        <div class="text-3xl sm:text-4xl font-extrabold text-red-700 dark:text-red-500 mb-1" id="stat-commits">0</div>
+        <div class="text-xs sm:text-sm text-slate-500 dark:text-red-300/60">총 깃허브 커밋 수</div>
+      </div>
+      <div class="text-center p-4 border-l border-red-100 dark:border-red-950/40 transition-colors duration-300">
+        <div class="text-3xl sm:text-4xl font-extrabold text-rose-700 dark:text-rose-500 mb-1">2026</div>
+        <div class="text-xs sm:text-sm text-slate-500 dark:text-red-300/60">현재 활동 연도</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Arcade Economy Controller -->
+  <section class="max-w-4xl mx-auto px-4 mb-8">
+    <div class="bg-gradient-to-r from-red-600 to-rose-600 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-white shadow-xl glow-red">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-wallet animate-pulse"></i>
+        </div>
+        <div>
+          <h4 class="font-black text-sm">통합 아케이드 아레나 코인 잔고</h4>
+          <p class="text-xs text-red-100">빠칭코 구슬 발사 및 피버 룰렛 스핀에 연동되어 연산됩니다!</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="bg-slate-950/60 rounded-xl px-5 py-2.5 flex items-center gap-2 border border-white/20">
+          <i class="fa-solid fa-coins text-amber-400 text-xl"></i>
+          <span class="font-mono text-2xl font-black text-white" id="global-coins">100</span>
+        </div>
+        <button onclick="rechargeGlobalCoins()" class="px-4 py-2.5 bg-white text-red-600 hover:bg-red-50 rounded-xl text-xs font-black shadow transition-all">
+          <i class="fa-solid fa-rotate-left mr-1"></i> 100코인 충전
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Minesweeper Section -->
+  <section id="minesweeper" class="max-w-4xl mx-auto px-4 py-12 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="text-center mb-8">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 mb-2">
+        <i class="fa-solid fa-gamepad"></i> ARCADE 01
+      </span>
+      <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">지뢰찾기 게임존</h2>
+      <p class="text-slate-500 dark:text-red-300/60 text-sm max-w-lg mx-auto">전통적인 수동 지뢰 제거 게임으로 정밀한 컨트롤에 도전하세요!</p>
+    </div>
+
+    <!-- Minesweeper Game Container -->
+    <div class="bg-white dark:bg-red-950/10 border border-red-200 dark:border-red-950/60 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+      <!-- Top control bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 pb-6 border-b border-red-100 dark:border-red-950/40">
+        <!-- Difficulty selectors -->
+        <div class="flex gap-2">
+          <button onclick="setDifficulty('easy')" id="diff-easy" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-red-600 text-white shadow-sm">초급 (9x9)</button>
+          <button onclick="setDifficulty('medium')" id="diff-medium" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-600 dark:bg-red-950/30 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30">중급 (16x16)</button>
+        </div>
+
+        <!-- Timer & Mines left indicators -->
+        <div class="flex gap-4 items-center">
+          <div class="bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/40 rounded-xl px-4 py-2 flex items-center gap-2">
+            <i class="fa-solid fa-bomb text-red-500"></i>
+            <span class="font-mono text-lg font-bold text-slate-800 dark:text-red-200" id="mines-left-text">010</span>
+          </div>
+          <div class="bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/40 rounded-xl px-4 py-2 flex items-center gap-2">
+            <i class="fa-regular fa-clock text-rose-500"></i>
+            <span class="font-mono text-lg font-bold text-slate-800 dark:text-red-200" id="timer-text">000</span>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button onclick="resetMinesweeper()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-1.5 glow-red">
+          <i class="fa-solid fa-rotate-right"></i> 새 게임
+        </button>
+      </div>
+
+      <!-- Mobile Touch Mode Selection (Dig or Flag) -->
+      <div class="flex justify-center mb-6">
+        <div class="bg-red-50 dark:bg-red-950/40 p-1.5 rounded-xl border border-red-100 dark:border-red-900/30 flex gap-1 shadow-inner">
+          <button onclick="setInteractionMode('reveal')" id="mode-reveal" class="px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all bg-white dark:bg-red-900 text-red-600 dark:text-red-100 shadow-md">
+            <i class="fa-solid fa-shovel"></i> 지뢰 제거 (클릭)
+          </button>
+          <button onclick="setInteractionMode('flag')" id="mode-flag" class="px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all text-slate-500 dark:text-red-300/70 hover:bg-white/50 dark:hover:bg-red-950/50">
+            <i class="fa-solid fa-flag text-rose-500"></i> 깃발 꽂기
+          </button>
+        </div>
+      </div>
+
+      <!-- Game Board Wrapper -->
+      <div class="overflow-auto max-w-full flex justify-center py-2">
+        <div id="minesweeper-grid" class="grid gap-1 bg-red-100 dark:bg-red-950/50 p-2.5 rounded-2xl border border-red-200 dark:border-red-950/40 shadow-inner">
+          <!-- Cells will be generated here dynamically -->
+        </div>
+      </div>
+
+      <!-- Status Overlay Message -->
+      <div id="minesweeper-overlay" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center text-center p-6 z-10 animate-fade-in">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-tr flex items-center justify-center text-white text-3xl mb-4" id="overlay-icon-bg">
+          <i id="overlay-icon" class="fa-solid"></i>
+        </div>
+        <h3 class="text-2xl font-black text-white mb-2" id="overlay-title">게임 클리어!</h3>
+        <p class="text-red-200 text-sm max-w-sm mb-6 leading-relaxed" id="overlay-desc">축하합니다! 대단한 집중력으로 모든 지뢰를 찾아내셨습니다.</p>
+        <button onclick="resetMinesweeper(); document.getElementById('minesweeper-overlay').classList.add('hidden');" class="px-6 py-3 rounded-xl bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-extrabold text-sm transition-all glow-red">
+          다시 도전하기 <i class="fa-solid fa-play ml-1"></i>
+        </button>
+      </div>
+
+      <div class="mt-6 text-center text-[10px] sm:text-xs text-slate-500 dark:text-red-300/40 flex flex-wrap justify-center items-center gap-4">
+        <span><i class="fa-solid fa-circle-info mr-1"></i> PC: 마우스 왼쪽 클릭(파기), 마우스 오른쪽 클릭(깃발)</span>
+        <span>|</span>
+        <span><i class="fa-solid fa-mobile-screen mr-1"></i> 모바일: 하단의 제거/깃발 모드 버튼을 활용해 플래그 제어</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pachinko Section -->
+  <section id="pachinko" class="max-w-4xl mx-auto px-4 py-12 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="text-center mb-8">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 mb-2">
+        <i class="fa-solid fa-circle-notch text-rose-500"></i> ARCADE 02
+      </span>
+      <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">빠칭코 물리 구슬치기</h2>
+      <p class="text-slate-500 dark:text-red-300/60 text-sm max-w-lg mx-auto">상단 가이드에서 조준 발사해 못을 타며 떨어지는 구슬을 최적의 배율 칸에 안착시켜 코인을 수집하세요!</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white dark:bg-red-950/10 border border-red-200 dark:border-red-950/60 rounded-3xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
+      
+      <!-- Side Dashboard (1/3 cols) -->
+      <div class="md:col-span-1 flex flex-col justify-between gap-6 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/30 p-5 rounded-2xl">
+        <div class="space-y-4">
+          <div class="text-xs font-bold text-slate-500 dark:text-red-300/50 uppercase tracking-widest"><i class="fa-solid fa-gamepad"></i> 빠칭코 룸 정보</div>
+          <div class="p-3.5 bg-slate-900 rounded-xl border border-red-950">
+            <h5 class="text-xs font-black text-rose-400 mb-1">🎯 고정 배율 구역 가이드</h5>
+            <div class="text-[11px] text-slate-300 leading-relaxed space-y-1">
+              <div>• <span class="text-red-400 font-bold">x5 구역</span> (중앙): 발사 비용의 5배 반환!</div>
+              <div>• <span class="text-cyan-400 font-bold">x2 구역</span>: 발사 비용의 2배 반환</div>
+              <div>• <span class="text-slate-400 font-bold">x1 구역</span>: 원금 보존</div>
+              <div>• <span class="text-slate-600 font-bold">x0 구역</span>: 낙하 손실</div>
+            </div>
+          </div>
+          
+          <div class="p-3 bg-red-100/50 dark:bg-red-950/50 rounded-xl border border-red-200/50 dark:border-red-900/20 text-xs leading-relaxed text-slate-600 dark:text-red-300/70">
+            <i class="fa-solid fa-lightbulb text-rose-500 mr-1 animate-pulse"></i> <strong>민성이의 조준 팁:</strong> 캔버스 맨 위 검은 선 영역을 클릭하면 원하는 가로축에 직접 정확하게 구슬을 조준 투하할 수 있어!
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="space-y-2 mt-4">
+          <button onclick="dropPachinkoBallAtTop()" class="w-full py-4 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-extrabold text-sm shadow-md transition-all flex items-center justify-center gap-2 glow-red">
+            <i class="fa-solid fa-rocket animate-bounce"></i> 무작위 발사 (-5 코인)
+          </button>
+        </div>
+      </div>
+
+      <!-- Physics Canvas Screen (2/3 cols) -->
+      <div class="md:col-span-2 flex flex-col items-center justify-center">
+        <div class="relative w-full max-w-[340px] bg-slate-950 rounded-2xl border-2 border-red-500/30 overflow-hidden shadow-2xl">
+          <canvas id="pachinko-canvas" width="340" height="420" class="block w-full h-auto cursor-pointer"></canvas>
+        </div>
+        <p class="mt-3 text-center text-[11px] text-slate-500 dark:text-red-300/40">
+          <i class="fa-solid fa-crosshairs mr-1"></i> 기기 조준: 상단 가이드라인을 터치하여 수동 발사 지점을 실시간 타겟팅하세요.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Fever Roulette Section -->
+  <section id="roulette" class="max-w-4xl mx-auto px-4 py-12 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="text-center mb-8">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 mb-2">
+        <i class="fa-solid fa-life-ring text-amber-500"></i> ARCADE 03
+      </span>
+      <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">피버 회전 룰렛</h2>
+      <p class="text-slate-500 dark:text-red-300/60 text-sm max-w-lg mx-auto">구슬치기와 별개로, 오직 룰렛 고유의 회전 관성 물리와 스릴을 즐기는 전용 스핀 룰렛 휠입니다!</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white dark:bg-red-950/10 border border-red-200 dark:border-red-950/60 rounded-3xl p-6 shadow-xl relative overflow-hidden transition-colors duration-300">
+      
+      <!-- Side Wheel Panel (1/3 cols) -->
+      <div class="md:col-span-1 flex flex-col justify-between gap-6 bg-amber-500/5 dark:bg-amber-500/5 border border-amber-500/10 dark:border-amber-500/20 p-5 rounded-2xl">
+        <div class="space-y-4">
+          <div class="text-xs font-bold text-amber-600 dark:text-amber-400/80 uppercase tracking-widest"><i class="fa-solid fa-star"></i> 룰렛 배당표</div>
+          
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
+              <span class="font-bold text-yellow-500"><i class="fa-solid fa-gem mr-1"></i> 대박 💎</span>
+              <span class="font-mono text-white bg-amber-600 px-1.5 py-0.5 rounded font-black">+100 코인</span>
+            </div>
+            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
+              <span class="font-bold text-purple-400"><i class="fa-solid fa-bolt mr-1"></i> 행운 🌟</span>
+              <span class="font-mono text-white bg-purple-600 px-1.5 py-0.5 rounded font-black">+50 코인</span>
+            </div>
+            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
+              <span class="font-bold text-cyan-500"><i class="fa-solid fa-coins mr-1"></i> 보너스 🪙</span>
+              <span class="font-mono text-white bg-cyan-600 px-1.5 py-0.5 rounded font-black">+30 코인</span>
+            </div>
+            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40">
+              <span class="font-bold text-rose-500"><i class="fa-solid fa-apple-whole mr-1"></i> 체리 🍒</span>
+              <span class="font-mono text-white bg-rose-600 px-1.5 py-0.5 rounded font-black">+15 코인</span>
+            </div>
+            <div class="flex items-center justify-between text-xs p-2 rounded bg-slate-950/10 dark:bg-slate-950/40 text-slate-500">
+              <span><i class="fa-solid fa-bomb mr-1"></i> 아쉬운 꽝 💣</span>
+              <span class="font-mono">0 코인</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2 mt-4">
+          <div class="text-[10px] text-slate-400 text-center mb-1">회전 시 코인 15개가 차감됩니다.</div>
+          <button onclick="spinRouletteWheel()" id="spin-wheel-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 hover:from-amber-600 hover:to-orange-600 text-slate-950 font-black text-sm shadow-md transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-rotate animate-spin"></i> 룰렛 스핀 시작 (-15 코인)
+          </button>
+        </div>
+      </div>
+
+      <!-- Roulette Canvas Screen (2/3 cols) -->
+      <div class="md:col-span-2 flex flex-col items-center justify-center py-4">
+        <div class="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
+          <!-- Canvas Wheel element -->
+          <canvas id="roulette-canvas" width="320" height="320" class="block w-full h-auto bg-transparent"></canvas>
+          <!-- Beautiful Physical center pin -->
+          <div class="absolute w-8 h-8 rounded-full bg-slate-950 border-4 border-amber-500 flex items-center justify-center shadow-lg">
+            <div class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></div>
+          </div>
+          <!-- Top pointer arrow -->
+          <div class="absolute -top-3 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[24px] border-l-transparent border-r-transparent border-t-red-600 drop-shadow-md z-10"></div>
+        </div>
+        <div class="text-center text-xs font-black text-slate-700 dark:text-red-300/80 mt-4 min-h-[18px]" id="roulette-status-text">
+          버튼을 눌러 피버 룰렛을 작동시키세요!
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projects Showcase Section -->
+  <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div>
+        <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">My Projects</h2>
+        <p class="text-slate-600 dark:text-red-200/70">직접 기획하고 개발한 동아리 프로젝트 목록입니다.</p>
+      </div>
+      <!-- Filter Controls -->
+      <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="filter-buttons">
+        <button data-filter="all" class="px-4 py-2 rounded-full text-sm font-semibold bg-red-600 text-white transition-all active-filter shadow-sm">전체</button>
+        <button data-filter="web" class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 text-slate-600 dark:bg-red-950/40 dark:text-red-300 hover:text-slate-900 dark:hover:text-white hover:bg-red-100 dark:hover:bg-red-900/40 transition-all">웹 개발</button>
+        <button data-filter="game" class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 text-slate-600 dark:bg-red-950/40 dark:text-red-300 hover:text-slate-900 dark:hover:text-white hover:bg-red-100 dark:hover:bg-red-900/40 transition-all">게임 개발</button>
+        <button data-filter="ai" class="px-4 py-2 rounded-full text-sm font-semibold bg-slate-100 text-slate-600 dark:bg-red-950/40 dark:text-red-300 hover:text-slate-900 dark:hover:text-white hover:bg-red-100 dark:hover:bg-red-900/40 transition-all">AI/IoT</button>
+      </div>
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="project-grid">
+      <!-- Card 1: School Meal Assistant (Web) -->
+      <div class="project-card group bg-white dark:bg-[#1a0808] rounded-2xl border border-red-100 dark:border-red-950/40 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-red-500/50 shadow-md dark:shadow-none" data-category="web">
+        <div class="h-48 bg-slate-100 dark:bg-[#110505] relative flex items-center justify-center p-4 overflow-hidden transition-colors duration-300">
+          <div class="absolute inset-0 bg-gradient-to-tr from-red-100/40 to-slate-100/40 dark:from-red-950/40 dark:to-slate-900/40"></div>
+          <!-- Simulated UI placeholder -->
+          <div class="w-full h-full border border-red-200 dark:border-red-900/40 rounded-lg p-3 bg-white/90 dark:bg-[#150505]/60 z-10 flex flex-col justify-between shadow-sm">
+            <div class="flex justify-between items-center text-xs text-red-600 dark:text-red-400 font-semibold">
+              <span>언양고 급식 도우미 v1.2</span>
+              <span class="px-2 py-0.5 rounded bg-red-500/20 text-[10px]">LIVE</span>
+            </div>
+            <div class="space-y-1.5 my-auto">
+              <div class="h-3 bg-red-500/30 rounded w-3/4"></div>
+              <div class="h-3 bg-slate-300 dark:bg-slate-700 rounded w-1/2"></div>
+              <div class="h-3 bg-slate-300 dark:bg-slate-700 rounded w-5/6"></div>
+            </div>
+            <div class="flex justify-end gap-1">
+              <div class="w-2 h-2 rounded-full bg-red-500"></div>
+              <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+              <div class="w-2 h-2 rounded-full bg-green-500"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-red-600 dark:text-red-400 font-bold tracking-wider uppercase">Web Application</span>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">언양고 오늘의 급식봇</h3>
+          <p class="text-slate-600 dark:text-red-200/70 text-sm mt-2 line-clamp-2">NEIS API를 연동하여 우리 학교의 일주일 치 급식과 영양 정보를 간편하게 모바일로 모아보는 웹앱 서비스입니다.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">HTML/CSS</span>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">JavaScript</span>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">Fetch API</span>
+          </div>
+          <button onclick="openModal('meal-helper')" class="w-full mt-6 py-2.5 rounded-xl bg-slate-100 dark:bg-red-950/40 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-slate-700 dark:text-red-300 text-sm font-bold transition-all flex items-center justify-center gap-1">
+            상세 보기 <i class="fa-solid fa-circle-info"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Pygame Jump (Game) -->
+      <div class="project-card group bg-white dark:bg-[#1a0808] rounded-2xl border border-red-100 dark:border-red-950/40 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-red-500/50 shadow-md dark:shadow-none" data-category="game">
+        <div class="h-48 bg-slate-100 dark:bg-[#110505] relative flex items-center justify-center p-4 overflow-hidden transition-colors duration-300">
+          <div class="absolute inset-0 bg-gradient-to-tr from-red-100/40 to-slate-100/40 dark:from-red-950/40 dark:to-slate-900/40"></div>
+          <!-- Game Mock -->
+          <div class="w-full h-full border border-red-200 dark:border-red-900/40 rounded-lg p-4 bg-white/90 dark:bg-[#150505]/80 z-10 flex flex-col justify-between items-center relative shadow-sm">
+            <div class="absolute top-2 left-2 text-xs text-red-600 dark:text-red-400 font-bold">SCORE: 2,450</div>
+            <!-- Character & Obstacle Graphic -->
+            <div class="my-auto flex flex-col items-center gap-4 w-full">
+              <div class="flex justify-between items-end w-full px-6">
+                <!-- Player -->
+                <div class="w-6 h-6 bg-red-500 rounded border-2 border-red-300 animate-bounce"></div>
+                <!-- Spikes -->
+                <div class="flex gap-1">
+                  <div class="w-4 h-4 bg-rose-500 rotate-45 transform origin-bottom"></div>
+                  <div class="w-4 h-4 bg-rose-500 rotate-45 transform origin-bottom"></div>
+                </div>
+              </div>
+              <div class="h-1 bg-slate-300 dark:bg-slate-700 w-full rounded"></div>
+            </div>
+            <div class="text-[10px] text-slate-500">PRESS SPACE TO JUMP</div>
+          </div>
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-red-600 dark:text-red-400 font-bold tracking-wider uppercase">Python Game</span>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">닷지마스터 (Dodge Master)</h3>
+          <p class="text-slate-600 dark:text-red-200/70 text-sm mt-2 line-clamp-2">Pygame 라이브러리를 사용해 만든 스피디한 아케이드 회피 게임으로, 프레임 최적화와 충돌 분석 로직을 구현했습니다.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">Python</span>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">Pygame</span>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">OOP</span>
+          </div>
+          <button onclick="openModal('dodge-game')" class="w-full mt-6 py-2.5 rounded-xl bg-slate-100 dark:bg-red-950/40 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-slate-700 dark:text-red-300 text-sm font-bold transition-all flex items-center justify-center gap-1">
+            상세 보기 <i class="fa-solid fa-circle-info"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: Smart Greenhouse (AI / IoT) -->
+      <div class="project-card group bg-white dark:bg-[#1a0808] rounded-2xl border border-red-100 dark:border-red-950/40 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:border-red-500/50 shadow-md dark:shadow-none" data-category="ai">
+        <div class="h-48 bg-slate-100 dark:bg-[#110505] relative flex items-center justify-center p-4 overflow-hidden transition-colors duration-300">
+          <div class="absolute inset-0 bg-gradient-to-tr from-red-100/40 to-slate-100/40 dark:from-red-950/40 dark:to-slate-900/40"></div>
+          <!-- Arduino Mock -->
+          <div class="w-full h-full border border-red-200 dark:border-red-900/40 rounded-lg p-3 bg-white/90 dark:bg-[#150505]/70 z-10 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-red-600 dark:text-red-400 font-mono font-semibold"><i class="fa-solid fa-microchip"></i> Arduino IoT</span>
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 my-auto">
+              <div class="bg-slate-50 dark:bg-slate-900/80 p-2 rounded border border-red-200 dark:border-red-900/40 text-center">
+                <span class="block text-[10px] text-slate-500">HUMIDITY</span>
+                <span class="text-sm font-bold text-red-600 dark:text-red-400">64.5%</span>
+              </div>
+              <div class="bg-slate-50 dark:bg-slate-900/80 p-2 rounded border border-red-200 dark:border-red-900/40 text-center">
+                <span class="block text-[10px] text-slate-500">TEMP</span>
+                <span class="text-sm font-bold text-orange-500 dark:text-orange-400">24.8°C</span>
+              </div>
+            </div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 text-center">Water Pump: <span class="text-green-600 font-semibold">STANDBY</span></div>
+          </div>
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-red-600 dark:text-red-400 font-bold tracking-wider uppercase">IoT & Hardware</span>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white mt-1 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">아두이노 스마트 온실 시스템</h3>
+          <p class="text-slate-600 dark:text-red-200/70 text-sm mt-2 line-clamp-2">온습도 센서와 조도 센서의 값을 기반으로 화분의 물 주기를 알아서 판단하고 급수하는 똑똑한 자동화 미니 스마트 온실기입니다.</p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">C++ / Arduino</span>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">Sensors</span>
+            <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-red-950/40 text-slate-600 dark:text-red-300 font-semibold">IoT Hardware</span>
+          </div>
+          <button onclick="openModal('smart-farm')" class="w-full mt-6 py-2.5 rounded-xl bg-slate-100 dark:bg-red-950/40 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-slate-700 dark:text-red-300 text-sm font-bold transition-all flex items-center justify-center gap-1">
+            상세 보기 <i class="fa-solid fa-circle-info"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Project Details Modals -->
+  <!-- Meal Helper Modal -->
+  <div id="modal-meal-helper" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm px-4 hidden">
+    <div class="bg-white dark:bg-[#1a0808] rounded-2xl border border-red-200 dark:border-red-900 w-full max-w-2xl overflow-hidden shadow-2xl transition-colors duration-300">
+      <div class="p-6 border-b border-red-100 dark:border-red-950/40 flex justify-between items-center transition-colors duration-300">
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="px-2 py-1 rounded bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-bold">WEB</span>
+          언양고 오늘의 급식봇
+        </h3>
+        <button onclick="closeModal('meal-helper')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-red-300 text-sm mb-1">🔍 프로젝트 개요</h4>
+          <p class="text-slate-600 dark:text-red-200/70 text-sm leading-relaxed">
+            매일 아침 학교 홈페이지나 복도에 부착된 급식표를 찾으러 가야 하는 불편함에서 시작되었습니다. 동아리 세미나에서 웹 크롤링과 API 통신을 배운 후, 교육부 NEIS Open API를 활용해 학급 친구들이 스마트폰 홈 화면에서 위젯처럼 쉽게 학교 메뉴를 읽을 수 있도록 만들었습니다.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-red-300 text-sm mb-1">🛠 핵심 기술 & 구현 방식</h4>
+          <ul class="list-disc pl-5 text-slate-600 dark:text-red-200/70 text-sm space-y-1">
+            <li>Fetch API를 사용한 비동기 데이터 통신.</li>
+            <li>언양고 고유 학교코드(7480112)와 교육청 코드(M10) 파라미터 매핑.</li>
+            <li>정규식을 활용해 급식 원재료에 섞인 알레르기 유발 물질 번호 자동 필터링 및 서식 가공.</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 dark:bg-red-950/30 p-4 rounded-xl border border-red-100 dark:border-red-900/40 transition-colors duration-300">
+          <h5 class="text-xs font-bold text-red-600 dark:text-red-400 mb-2">🔥 배운 점 & 느낀 점</h5>
+          <p class="text-slate-700 dark:text-red-200/80 text-xs leading-relaxed">
+            처음으로 실제 배포되어 친구들이 쓰는 모습을 보았습니다. UI 편의성이 성능만큼이나 중요하다는 것을 배웠으며, 서버 점검 등으로 API 응답이 없을 때를 대비한 예외 처리(Fallback) 로직의 필요성을 절실히 느꼈습니다.
+          </p>
+        </div>
+      </div>
+      <div class="p-4 bg-red-50 dark:bg-red-950/60 border-t border-red-100 dark:border-red-900/40 flex justify-end transition-colors duration-300">
+        <button onclick="closeModal('meal-helper')" class="px-5 py-2.5 rounded-lg bg-red-600 text-white font-bold text-sm hover:opacity-90 transition-opacity">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dodge Game Modal -->
+  <div id="modal-dodge-game" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm px-4 hidden">
+    <div class="bg-white dark:bg-[#1a0808] rounded-2xl border border-red-200 dark:border-red-900 w-full max-w-2xl overflow-hidden shadow-2xl transition-colors duration-300">
+      <div class="p-6 border-b border-red-100 dark:border-red-950/40 flex justify-between items-center transition-colors duration-300">
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="px-2 py-1 rounded bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold">GAME</span>
+          닷지마스터 (Dodge Master)
+        </h3>
+        <button onclick="closeModal('dodge-game')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-red-300 text-sm mb-1">🎮 프로젝트 개요</h4>
+          <p class="text-slate-600 dark:text-red-200/70 text-sm leading-relaxed">
+            파이썬의 절차지향 코딩에서 객체지향 프로그래밍(OOP)으로 실력을 한 단계 성장시키기 위해 제작한 프로젝트입니다. 동아리 학술제 전시용 게임부스로 출품되어 전교생의 뜨거운 신기록 경쟁을 불러일으켰습니다.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-red-300 text-sm mb-1">🛠 핵심 기술 & 구현 방식</h4>
+          <ul class="list-disc pl-5 text-slate-600 dark:text-red-200/70 text-sm space-y-1">
+            <li>플레이어, 방해물, 아이템 객체(Class) 설계 및 캡슐화 구현.</li>
+            <li>`Rect.colliderect`를 활용한 박스 형태 충돌 보정 시스템 구축.</li>
+            <li>시간 경과에 따른 난이도(스폰율, 장애물 속도) 상승 알고리즘 설계.</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 dark:bg-red-950/30 p-4 rounded-xl border border-red-100 dark:border-red-900/40 transition-colors duration-300">
+          <h5 class="text-xs font-bold text-rose-600 dark:text-rose-400 mb-2">👾 배운 점 & 느낀 점</h5>
+          <p class="text-slate-700 dark:text-red-200/80 text-xs leading-relaxed">
+            동아리 부원들이 게임을 무조건 부수려고 하는 것(버그 테스팅)을 보고, 안정적인 코드 작성이 가장 기본이 되어야 함을 깨달았습니다. 클래스 분할 설계를 통해 추후 새로운 장애물을 추가할 때 기존 코드를 수정하지 않고 쉽게 유연하게 확장할 수 있는 OOP의 위대함을 알게 되었습니다.
+          </p>
+        </div>
+      </div>
+      <div class="p-4 bg-red-50 dark:bg-red-950/60 border-t border-red-100 dark:border-red-900/40 flex justify-end transition-colors duration-300">
+        <button onclick="closeModal('dodge-game')" class="px-5 py-2.5 rounded-lg bg-rose-500 text-white font-bold text-sm hover:opacity-90 transition-opacity">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Farm Modal -->
+  <div id="modal-smart-farm" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm px-4 hidden">
+    <div class="bg-white dark:bg-[#1a0808] rounded-2xl border border-red-200 dark:border-red-900 w-full max-w-2xl overflow-hidden shadow-2xl transition-colors duration-300">
+      <div class="p-6 border-b border-red-100 dark:border-red-950/40 flex justify-between items-center transition-colors duration-300">
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span class="px-2 py-1 rounded bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-bold">IoT</span>
+          아두이노 스마트 온실 시스템
+        </h3>
+        <button onclick="closeModal('smart-farm')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-red-300 text-sm mb-1">🌿 프로젝트 개요</h4>
+          <p class="text-slate-600 dark:text-red-200/70 text-sm leading-relaxed">
+            동아리실에 있는 화분들이 방학 기간 동안 시들어 죽는 것을 보며 안타까운 마음에 기획했습니다. 소프트웨어 개발 기술과 하드웨어를 접목하여 물리 세상에 직접 개입하고 제어해보는 색다른 재미를 느낄 수 있었습니다.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-red-300 text-sm mb-1">🛠 핵심 기술 & 구현 방식</h4>
+          <ul class="list-disc pl-5 text-slate-600 dark:text-red-200/70 text-sm space-y-1">
+            <li>DHT11 온습도 센서와 토양 수분 센서 데이터 융합 처리.</li>
+            <li>5V 워터 펌프 모터 및 모터 드라이버(L298N) 제어 제어.</li>
+            <li>16x2 I2C LCD 스크린을 통한 실시간 현재 상태 시각화 출력.</li>
+          </ul>
+        </div>
+        <div class="bg-red-50 dark:bg-red-950/30 p-4 rounded-xl border border-red-100 dark:border-red-900/40 transition-colors duration-300">
+          <h5 class="text-xs font-bold text-red-600 dark:text-red-400 mb-2">⚡ 배운 점 & 느낀 점</h5>
+          <p class="text-slate-700 dark:text-red-200/80 text-xs leading-relaxed">
+            현실 세계의 센서값은 예상보다 노이즈가 많다는 것을 알게 되었으며, 수분 센서 값이 튀는 현상을 소프트웨어 평균 필터 알고리즘을 만들어 방어해냈습니다. 이 과정에서 순수 개발을 넘어 하드웨어 인터페이스와 프로토콜에 대한 이해를 크게 기를 수 있었습니다.
+          </p>
+        </div>
+      </div>
+      <div class="p-4 bg-red-50 dark:bg-red-950/60 border-t border-red-100 dark:border-red-900/40 flex justify-end transition-colors duration-300">
+        <button onclick="closeModal('smart-farm')" class="px-5 py-2.5 rounded-lg bg-red-600 text-white font-bold text-sm hover:opacity-90 transition-opacity">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech Stack Interactive Section -->
+  <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">My Tech Stack</h2>
+      <p class="text-slate-600 dark:text-red-200/70">파이크래프트 개발팀이 능숙하게 다루거나 관심을 갖고 공부하고 있는 주요 기술 스택입니다. 아이콘을 눌러 각 분야의 성취 수준과 세부 내용을 확인해보세요!</p>
+    </div>
+
+    <!-- Tech Navigation Buttons -->
+    <div class="flex justify-center gap-3 mb-10 overflow-x-auto pb-4">
+      <button onclick="selectSkillCategory('pl')" id="skill-btn-pl" class="px-5 py-3 rounded-xl bg-white dark:bg-red-950/40 border border-red-500/30 text-red-600 dark:text-red-400 font-bold text-sm transition-all shadow-md flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-code"></i> 프로그래밍 언어
+      </button>
+      <button onclick="selectSkillCategory('web')" id="skill-btn-web" class="px-5 py-3 rounded-xl bg-white dark:bg-red-950/40 border border-transparent text-slate-500 dark:text-red-300/60 hover:text-slate-800 dark:hover:text-slate-200 font-bold text-sm transition-all flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-globe"></i> 웹 개발
+      </button>
+      <button onclick="selectSkillCategory('hw')" id="skill-btn-hw" class="px-5 py-3 rounded-xl bg-white dark:bg-red-950/40 border border-transparent text-slate-500 dark:text-red-300/60 hover:text-slate-800 dark:hover:text-slate-200 font-bold text-sm transition-all flex items-center gap-2 whitespace-nowrap">
+        <i class="fa-solid fa-microchip"></i> 하드웨어/기타
+      </button>
+    </div>
+
+    <!-- Interactive Skill Display Box -->
+    <div class="bg-gradient-to-br from-white to-red-50/50 dark:from-red-950/20 dark:to-[#150505] rounded-3xl border border-red-200 dark:border-red-950/40 p-8 shadow-xl max-w-4xl mx-auto transition-colors duration-300">
+      <div id="skills-container-pl" class="skill-category-block grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Python -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-brands fa-python text-yellow-500 dark:text-yellow-400 text-lg"></i> Python</span>
+            <span class="text-xs text-yellow-600 dark:text-yellow-400 font-bold bg-yellow-400/10 px-2 py-0.5 rounded">80%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-yellow-400 to-amber-500 h-full rounded-full transition-all duration-1000" style="width: 80%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">알고리즘 구현, 데이터 분석 기초, Pygame 개발, 텍스트 크롤링 기술 마스터</p>
+        </div>
+        <!-- JavaScript -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-brands fa-js text-yellow-600 dark:text-yellow-300 text-lg"></i> JavaScript</span>
+            <span class="text-xs text-yellow-600 dark:text-yellow-300 font-bold bg-yellow-300/10 px-2 py-0.5 rounded">70%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-yellow-300 to-yellow-500 h-full rounded-full transition-all duration-1000" style="width: 70%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">DOM 구조 직접 제어, Fetch API 비동기 서버 통신 및 JSON 파싱, 인터랙티브 동적 이벤트 구현</p>
+        </div>
+        <!-- C++ -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid fa-c text-blue-500 dark:text-blue-400 text-sm"></i><span class="text-sm font-bold text-blue-500 dark:text-blue-400">++</span> C++</span>
+            <span class="text-xs text-blue-600 dark:text-blue-400 font-bold bg-blue-400/10 px-2 py-0.5 rounded">60%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-blue-400 to-cyan-500 h-full rounded-full transition-all duration-1000" style="width: 60%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">자료구조와 포인터 개념 이해, 백준 온라인 저지 알고리즘 정렬 및 탐색 문제 풀이</p>
+        </div>
+      </div>
+
+      <div id="skills-container-web" class="skill-category-block grid grid-cols-1 md:grid-cols-2 gap-8 hidden">
+        <!-- HTML5 / CSS3 -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-brands fa-html5 text-orange-500 text-lg"></i> HTML5 / CSS3</span>
+            <span class="text-xs text-orange-600 dark:text-orange-500 font-bold bg-orange-500/10 px-2 py-0.5 rounded">85%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-orange-500 to-red-500 h-full rounded-full transition-all duration-1000" style="width: 85%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">반응형 모바일 그리드 레이아웃 설계, CSS 애니메이션 적용, 웹 시맨틱 태그 구조화</p>
+        </div>
+        <!-- Tailwind CSS -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid fa-wind text-teal-500 dark:text-teal-400 text-lg"></i> Tailwind CSS</span>
+            <span class="text-xs text-teal-600 dark:text-teal-400 font-bold bg-teal-400/10 px-2 py-0.5 rounded">75%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-teal-400 to-emerald-500 h-full rounded-full transition-all duration-1000" style="width: 75%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">유틸리티 우선 스타일링 기법 적용, 모던하고 힙한 스타일의 다크 테마 포트폴리오 기획 및 빌드</p>
+        </div>
+      </div>
+
+      <div id="skills-container-hw" class="skill-category-block grid grid-cols-1 md:grid-cols-2 gap-8 hidden">
+        <!-- Arduino -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid fa-microchip text-red-600 dark:text-red-400 text-lg"></i> Arduino & Sensors</span>
+            <span class="text-xs text-red-600 dark:text-red-400 font-bold bg-red-400/10 px-2 py-0.5 rounded">75%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-red-400 to-rose-500 h-full rounded-full transition-all duration-1000" style="width: 75%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">다양한 센서(적외선, 토양, 압력 등) 데이터 처리, 서보모터 및 펌프 제어를 통한 실제 메이커 교구 구동</p>
+        </div>
+        <!-- Git & GitHub -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-brands fa-github text-slate-700 dark:text-slate-300 text-lg"></i> Git & GitHub</span>
+            <span class="text-xs text-slate-600 dark:text-slate-300 font-bold bg-slate-300/10 px-2 py-0.5 rounded">55%</span>
+          </div>
+          <div class="w-full bg-slate-200 dark:bg-red-950/60 h-2.5 rounded-full overflow-hidden transition-colors duration-300">
+            <div class="bg-gradient-to-r from-slate-400 to-slate-600 h-full rounded-full transition-all duration-1000" style="width: 55%"></div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-red-300/60 mt-2">버전 기록, 원격 저장소 푸시, 마크다운 문서 중심의 개인 위키(WIKI) 블로그 작성 및 운영</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Timeline Section -->
+  <section id="timeline" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="text-center mb-16">
+      <span class="text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-widest bg-red-400/10 px-3 py-1 rounded-full">성장 발자취</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-3">동아리 활동 기록 (타임라인)</h2>
+      <p class="text-slate-600 dark:text-red-200/70 mt-1">2학년 진학 후 정보동아리에서 배우며 완성한 의미 있는 기록들입니다.</p>
+    </div>
+
+    <!-- Timeline Body -->
+    <div class="relative border-l-2 border-red-200 dark:border-red-950 ml-4 md:ml-32 transition-colors duration-300">
+      <!-- Item 1 -->
+      <div class="mb-10 ml-6 relative group">
+        <!-- Dots and floating tags -->
+        <div class="absolute -left-[31px] top-1.5 bg-red-50 dark:bg-[#150505] border-2 border-red-500 w-4 h-4 rounded-full group-hover:bg-red-500 transition-colors"></div>
+        <div class="hidden md:block absolute -left-[140px] top-1 text-right w-24">
+          <span class="text-xs font-bold text-slate-400 dark:text-red-300/40">2026.03</span>
+        </div>
+        <div class="bg-white dark:bg-red-950/20 p-6 rounded-2xl border border-red-100 dark:border-red-950/40 hover:border-red-500/30 transition-all shadow-md dark:shadow-none">
+          <span class="inline-block md:hidden text-xs font-bold text-red-600 dark:text-red-400 mb-2">2026.03</span>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            정보동아리 2학년 선배로 활동 시작
+            <span class="text-[10px] bg-red-500/20 text-red-600 dark:text-red-400 px-2 py-0.5 rounded font-normal">START</span>
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-red-200/70 mt-2 leading-relaxed">
+            동아리 회원이자 선배로서 후배 기수를 환영하고 연간 프로젝트 주제 수립을 주도했습니다. '우리 실생활을 바꿀 혁신 하드웨어 및 웹'을 올해의 슬로건으로 채택했습니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="mb-10 ml-6 relative group">
+        <div class="absolute -left-[31px] top-1.5 bg-red-50 dark:bg-[#150505] border-2 border-rose-500 w-4 h-4 rounded-full group-hover:bg-rose-500 transition-colors"></div>
+        <div class="hidden md:block absolute -left-[140px] top-1 text-right w-24">
+          <span class="text-xs font-bold text-slate-400 dark:text-red-300/40">2026.04</span>
+        </div>
+        <div class="bg-white dark:bg-red-950/20 p-6 rounded-2xl border border-red-100 dark:border-red-950/40 hover:border-rose-500/30 transition-all shadow-md dark:shadow-none">
+          <span class="inline-block md:hidden text-xs font-bold text-rose-600 dark:text-rose-400 mb-2">2026.04</span>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">중간고사 기간 전, '알고리즘 미니 스터디'</h3>
+          <p class="text-sm text-slate-600 dark:text-red-200/70 mt-2 leading-relaxed">
+            동아리 내에서 백준 알고리즘 단계별 격파 세션을 구성했습니다. 스택, 큐와 같은 기본 알고리즘 개념을 1학년 후배들에게 설명해주며 코딩을 보는 시야와 실력이 더 넓어졌습니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="mb-10 ml-6 relative group">
+        <div class="absolute -left-[31px] top-1.5 bg-red-50 dark:bg-[#150505] border-2 border-red-700 w-4 h-4 rounded-full group-hover:bg-red-700 transition-colors"></div>
+        <div class="hidden md:block absolute -left-[140px] top-1 text-right w-24">
+          <span class="text-xs font-bold text-slate-400 dark:text-red-300/40">2026.05</span>
+        </div>
+        <div class="bg-white dark:bg-red-950/20 p-6 rounded-2xl border border-red-100 dark:border-red-950/40 hover:border-red-700/30 transition-all shadow-md dark:shadow-none">
+          <span class="inline-block md:hidden text-xs font-bold text-red-700 dark:text-red-500 mb-2">2026.05</span>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            '언양고 급식 도우미 Web' 프로토타입 공개
+            <span class="text-[10px] bg-red-500/20 text-red-700 dark:text-red-500 px-2 py-0.5 rounded font-normal">RELEASE</span>
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-red-200/70 mt-2 leading-relaxed">
+            처음으로 공공데이터 포털의 API를 분석해 JSON 형식의 데이터를 가져오고 바닐라 JS로 데이터를 가공하여 스마트폰에 최적화된 웹사이트를 친구들에게 첫선 보였습니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Guestbook Board (Uses Memory storage to feel alive) -->
+  <section id="guestbook" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-red-100 dark:border-red-950/40 transition-colors duration-300">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div class="lg:col-span-1">
+        <span class="text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-widest bg-red-400/10 px-3 py-1 rounded-full">GUESTBOOK</span>
+        <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-3">동아리 응원 메시지</h2>
+        <p class="text-slate-600 dark:text-red-200/70 mt-3 text-sm leading-relaxed">
+          파이크래프트의 성장을 지켜보고 계신 동아리 부원님, 선생님, 혹은 방문자분들의 따뜻한 한마디를 남겨주세요!
+        </p>
+        
+        <!-- Input Form -->
+        <form id="comment-form" class="mt-8 space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 dark:text-red-300/60 mb-2">닉네임</label>
+            <input type="text" id="comment-author" placeholder="예: 정보샘, 전교회장" class="w-full bg-white dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 text-slate-900 dark:text-white transition-colors" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 dark:text-red-300/60 mb-2">메시지 내용</label>
+            <textarea id="comment-text" placeholder="파이크래프트 힘내라! 아케이드 게임 대박이네!" rows="3" class="w-full bg-white dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-red-500 text-slate-900 dark:text-white transition-colors resize-none" required></textarea>
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 text-white font-bold text-sm transition-all hover:opacity-95 glow-red">
+            한마디 기록하기 <i class="fa-solid fa-paper-plane ml-1"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Comments Grid Board (Interactive) -->
+      <div class="lg:col-span-2">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center justify-between">
+          <span>남겨진 이야기</span>
+          <span class="text-xs text-slate-500 dark:text-red-300/60" id="comment-count">0개의 글</span>
+        </h3>
+        <div id="comments-board" class="space-y-4 max-h-[450px] overflow-y-auto pr-2">
+          <!-- Fallback if empty -->
+          <div id="no-comments" class="text-center py-12 bg-white dark:bg-red-950/20 rounded-2xl border border-red-100 dark:border-red-950/40 shadow-sm dark:shadow-none">
+            <i class="fa-regular fa-comment-dots text-3xl text-slate-400 dark:text-red-500/40 mb-2"></i>
+            <p class="text-slate-500 text-sm">첫 번째 메시지를 남겨보세요!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- High School Spirit Footer -->
+  <footer class="bg-red-100 dark:bg-[#110505] border-t border-red-200 dark:border-red-950/40 py-12 text-center text-slate-500 text-xs transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+        <span class="font-bold text-slate-600 dark:text-red-400">언양고등학교 정보동아리</span>
+      </div>
+      <p class="max-w-md mx-auto leading-relaxed text-slate-500 dark:text-red-300/60">
+        본 사이트는 2026학년도 언양고등학교 2학년 파이크래프트 포트폴리오 프로젝트 성과물 보존을 위해 제작되었습니다.
+      </p>
+      <p class="mt-2 text-[10px] text-slate-400 dark:text-red-700">&copy; 2026 Pycraft. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Box for alert-free interaction -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-white dark:bg-red-950 border border-red-500 text-slate-900 dark:text-red-100 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2 -translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+    <i class="fa-solid fa-circle-check text-red-500 dark:text-red-400"></i>
+    <span id="toast-message" class="text-sm">메시지가 등록되었습니다!</span>
+  </div>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Stats Counter Animation
+    function animateValue(obj, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    // Project filtering mechanism
+    const filterButtons = document.querySelectorAll('#filter-buttons button');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from previous active button
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-red-600', 'text-white');
+          b.classList.add('bg-slate-100', 'text-slate-600', 'dark:bg-red-950/40', 'dark:text-red-300');
+        });
+
+        // Add active style to current clicked button
+        btn.classList.remove('bg-slate-100', 'text-slate-600', 'dark:bg-red-950/40', 'dark:text-red-300');
+        btn.classList.add('bg-red-600', 'text-white');
+
+        const filterVal = btn.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          if (filterVal === 'all') {
+            card.classList.remove('hidden');
+          } else {
+            const category = card.getAttribute('data-category');
+            if (category === filterVal) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          }
+        });
+      });
+    });
+
+    // Modal Control functions
+    function openModal(id) {
+      document.getElementById(`modal-${id}`).classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // block scroll
+    }
+
+    function closeModal(id) {
+      document.getElementById(`modal-${id}`).classList.add('hidden');
+      document.body.style.overflow = ''; // allow scroll
+    }
+
+    // Tech skills tabs switching
+    function selectSkillCategory(category) {
+      const buttons = ['pl', 'web', 'hw'];
+      buttons.forEach(btn => {
+        const el = document.getElementById(`skill-btn-${btn}`);
+        if (btn === category) {
+          el.classList.add('border-red-500/30', 'text-red-600', 'dark:text-red-400');
+          el.classList.remove('border-transparent', 'text-slate-500', 'dark:text-red-300/60');
+        } else {
+          el.classList.remove('border-red-500/30', 'text-red-600', 'dark:text-red-400');
+          el.classList.add('border-transparent', 'text-slate-500', 'dark:text-red-300/60');
+        }
+      });
+
+      document.querySelectorAll('.skill-category-block').forEach(block => {
+        block.classList.add('hidden');
+      });
+      document.getElementById(`skills-container-${category}`).classList.remove('hidden');
+    }
+
+    /* ==========================================================================
+       GLOBAL ARCADE ECONOMY (SHARED COINS)
+       ========================================================================== */
+    let globalCoins = 100;
+
+    function updateGlobalCoinsUI() {
+      document.getElementById('global-coins').innerText = globalCoins;
+    }
+
+    function rechargeGlobalCoins() {
+      globalCoins = 100;
+      updateGlobalCoinsUI();
+      showToast("아케이드 코인이 100개로 충전되었습니다!");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = message;
+      
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    /* ==========================================================================
+       AUDIO SYNTHESIZER (WEB AUDIO API)
+       ========================================================================== */
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    function playBeep(freq, dur) {
+      try {
+        const actx = getAudioCtx();
+        if (actx.state === 'suspended') actx.resume();
+        const osc = actx.createOscillator();
+        const gain = actx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, actx.currentTime);
+        gain.gain.setValueAtTime(0.04, actx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(actx.destination);
+        osc.start();
+        osc.stop(actx.currentTime + dur);
+      } catch(e) {}
+    }
+
+    function playFanfare(jackpot) {
+      try {
+        const actx = getAudioCtx();
+        if (actx.state === 'suspended') actx.resume();
+        const scale = jackpot ? [523.25, 659.25, 783.99, 1046.50] : [261.63, 329.63, 392.00, 523.25];
+        scale.forEach((freq, idx) => {
+          setTimeout(() => {
+            const osc = actx.createOscillator();
+            const gain = actx.createGain();
+            osc.frequency.setValueAtTime(freq, actx.currentTime);
+            gain.gain.setValueAtTime(0.06, actx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.35);
+            osc.connect(gain);
+            gain.connect(actx.destination);
+            osc.start();
+            osc.stop(actx.currentTime + 0.35);
+          }, idx * 90);
+        });
+      } catch(e) {}
+    }
+
+    /* ==========================================================================
+       PACHINKO PHYSICS ENGINE
+       ========================================================================== */
+    let pBalls = [];
+    let pPegs = [];
+    let pDividers = [];
+    const pGravity = 0.16;
+    const pBounce = 0.55; 
+    const pFriction = 0.995;
+    let pCanvas, pCtx;
+    let pAnimationId = null;
+
+    const pBuckets = [
+      { text: "x1", color: "#475569", multiplier: 1 },
+      { text: "x2", color: "#0ea5e9", multiplier: 2 },
+      { text: "x5", color: "#f43f5e", multiplier: 5 },
+      { text: "x0", color: "#b91c1c", multiplier: 0 },
+      { text: "x5", color: "#f43f5e", multiplier: 5 },
+      { text: "x2", color: "#0ea5e9", multiplier: 2 },
+      { text: "x1", color: "#475569", multiplier: 1 }
+    ];
+
+    function initPachinkoBoard() {
+      pCanvas = document.getElementById('pachinko-canvas');
+      pCtx = pCanvas.getContext('2d');
+      pPegs = [];
+      pDividers = [];
+
+      // Create triangle grid peg layout
+      const pegRows = 8;
+      const startY = 80;
+      const rowSpacing = 32;
+      for (let r = 0; r < pegRows; r++) {
+        const pegCount = 4 + r;
+        const spacing = 340 / (pegCount + 1);
+        for (let p = 0; p < pegCount; p++) {
+          pPegs.push({
+            x: spacing * (p + 1),
+            y: startY + r * rowSpacing,
+            r: 3.5
+          });
+        }
+      }
+
+      // Create bottom bucket divider locations
+      const bucketWidth = 340 / 7;
+      for (let i = 1; i < 7; i++) {
+        pDividers.push({
+          x: i * bucketWidth,
+          y: 360,
+          len: 60
+        });
+      }
+
+      // Allow click events on canvas to trigger targeted launches
+      pCanvas.addEventListener('mousedown', (e) => {
+        const rect = pCanvas.getBoundingClientRect();
+        const clickX = (e.clientX - rect.left) * (340 / rect.width);
+        const clickY = (e.clientY - rect.top) * (420 / rect.height);
+        
+        if (clickY < 50) {
+          launchBallAtX(clickX);
+        }
+      });
+    }
+
+    function dropPachinkoBallAtTop() {
+      const randX = 40 + Math.random() * 260;
+      launchBallAtX(randX);
+    }
+
+    function launchBallAtX(posX) {
+      if (globalCoins < 5) {
+        showToast("코인이 부족합니다! 충전 단추를 누르세요.");
+        return;
+      }
+      globalCoins -= 5;
+      updateGlobalCoinsUI();
+      
+      pBalls.push({
+        x: posX,
+        y: 20,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: 1,
+        r: 7,
+        color: '#f43f5e',
+        active: true
+      });
+
+      playBeep(440, 0.1);
+    }
+
+    function updatePhysics() {
+      pBalls.forEach(b => {
+        if (!b.active) return;
+
+        b.vy += pGravity;
+        b.vx *= pFriction;
+        b.vy *= pFriction;
+        b.x += b.vx;
+        b.y += b.vy;
+
+        // Wall collisions
+        if (b.x - b.r < 0) {
+          b.x = b.r;
+          b.vx = -b.vx * pBounce;
+          playBeep(500, 0.04);
+        } else if (b.x + b.r > 340) {
+          b.x = 340 - b.r;
+          b.vx = -b.vx * pBounce;
+          playBeep(500, 0.04);
+        }
+
+        // Peg collisions
+        pPegs.forEach(peg => {
+          const dx = b.x - peg.x;
+          const dy = b.y - peg.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const minDist = b.r + peg.r;
+
+          if (dist < minDist) {
+            const overlap = minDist - dist;
+            const nx = dx / dist;
+            const ny = dy / dist;
+            b.x += nx * overlap;
+            b.y += ny * overlap;
+
+            const dot = b.vx * nx + b.vy * ny;
+            b.vx = (b.vx - 2 * dot * nx) * pBounce + (Math.random() - 0.5) * 0.2;
+            b.vy = (b.vy - 2 * dot * ny) * pBounce;
+
+            playBeep(900 + Math.random() * 600, 0.03);
+          }
+        });
+
+        // Dividers
+        pDividers.forEach(div => {
+          if (b.y >= div.y && b.y <= div.y + div.len) {
+            const dx = b.x - div.x;
+            if (Math.abs(dx) < b.r) {
+              b.x = div.x + (dx > 0 ? b.r : -b.r);
+              b.vx = -b.vx * 0.3;
+            }
+          }
+        });
+
+        // Bottom Landing
+        if (b.y + b.r >= 400) {
+          b.active = false;
+          resolveBucketLanding(b.x);
+        }
+      });
+
+      pBalls = pBalls.filter(b => b.active);
+    }
+
+    function resolveBucketLanding(finalX) {
+      const bucketWidth = 340 / 7;
+      let idx = Math.floor(finalX / bucketWidth);
+      if (idx < 0) idx = 0;
+      if (idx > 6) idx = 6;
+
+      const result = pBuckets[idx];
+      const payout = result.multiplier * 5; // 5 coin base
+
+      if (payout > 0) {
+        globalCoins += payout;
+        playBeep(650, 0.15);
+        showToast(`구슬 안착! ${result.text} 배율 적용으로 +${payout} 코인 획득!`);
+      } else {
+        playBeep(180, 0.3);
+        showToast(`아쉽습니다! x0 낙하 구역입니다.`);
+      }
+      updateGlobalCoinsUI();
+    }
+
+    function renderPachinko() {
+      pCtx.fillStyle = '#090202';
+      pCtx.fillRect(0, 0, 340, 420);
+
+      // Launcher guide line
+      pCtx.strokeStyle = 'rgba(239, 68, 68, 0.15)';
+      pCtx.setLineDash([5, 5]);
+      pCtx.beginPath();
+      pCtx.moveTo(0, 50);
+      pCtx.lineTo(340, 50);
+      pCtx.stroke();
+      pCtx.setLineDash([]);
+
+      pCtx.fillStyle = 'rgba(239, 68, 68, 0.4)';
+      pCtx.font = 'bold 9px monospace';
+      pCtx.textAlign = 'center';
+      pCtx.fillText("터치하여 구슬 수동 에이밍 라인", 170, 30);
+
+      // Pegs
+      pPegs.forEach(peg => {
+        pCtx.beginPath();
+        pCtx.arc(peg.x, peg.y, peg.r, 0, Math.PI * 2);
+        pCtx.fillStyle = '#f43f5e';
+        pCtx.fill();
+      });
+
+      // Buckets
+      const bw = 340 / 7;
+      pBuckets.forEach((b, idx) => {
+        pCtx.fillStyle = b.color;
+        pCtx.fillRect(idx * bw, 380, bw, 40);
+
+        pCtx.fillStyle = '#ffffff';
+        pCtx.font = 'bold 11px monospace';
+        pCtx.textAlign = 'center';
+        pCtx.fillText(b.text, idx * bw + bw / 2, 405);
+      });
+
+      // Dividers
+      pCtx.strokeStyle = '#f43f5e';
+      pCtx.lineWidth = 2;
+      pDividers.forEach(div => {
+        pCtx.beginPath();
+        pCtx.moveTo(div.x, div.y);
+        pCtx.lineTo(div.x, div.y + div.len);
+        pCtx.stroke();
+      });
+
+      // Balls
+      pBalls.forEach(b => {
+        pCtx.beginPath();
+        pCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        pCtx.fillStyle = b.color;
+        pCtx.shadowColor = b.color;
+        pCtx.shadowBlur = 6;
+        pCtx.fill();
+        pCtx.shadowBlur = 0;
+      });
+    }
+
+    function runPachinkoGameLoop() {
+      updatePhysics();
+      renderPachinko();
+      pAnimationId = requestAnimationFrame(runPachinkoGameLoop);
+    }
+
+    /* ==========================================================================
+       FEVER SPINNER ROULETTE WHEEL
+       ========================================================================== */
+    let rCanvas, rCtx;
+    let rAngle = 0;
+    let rSpeed = 0;
+    let rIsSpinning = false;
+    const rSegments = [
+      { name: "대박 💎", val: 100, color: "#eab308" },
+      { name: "꽝 💣", val: 0, color: "#1e293b" },
+      { name: "보너스 🪙", val: 30, color: "#06b6d4" },
+      { name: "꽝 💣", val: 0, color: "#1e293b" },
+      { name: "체리 🍒", val: 15, color: "#ec4899" },
+      { name: "꽝 💣", val: 0, color: "#1e293b" },
+      { name: "행운 🌟", val: 50, color: "#a855f7" },
+      { name: "꽝 💣", val: 0, color: "#1e293b" }
+    ];
+
+    function initRouletteBoard() {
+      rCanvas = document.getElementById('roulette-canvas');
+      rCtx = rCanvas.getContext('2d');
+      drawRouletteWheel();
+    }
+
+    function drawRouletteWheel() {
+      const cx = 160;
+      const cy = 160;
+      const r = 150;
+      const arc = (Math.PI * 2) / rSegments.length;
+
+      rCtx.clearRect(0, 0, 320, 320);
+
+      // Outer gold border ring
+      rCtx.beginPath();
+      rCtx.arc(cx, cy, r + 4, 0, Math.PI * 2);
+      rCtx.fillStyle = '#d97706';
+      rCtx.fill();
+
+      rSegments.forEach((seg, idx) => {
+        const startAng = rAngle + idx * arc;
+        const endAng = startAng + arc;
+
+        // Sector Segment draw
+        rCtx.beginPath();
+        rCtx.arc(cx, cy, r, startAng, endAng);
+        rCtx.lineTo(cx, cy);
+        rCtx.fillStyle = seg.color;
+        rCtx.fill();
+        rCtx.strokeStyle = '#ffffff33';
+        rCtx.lineWidth = 1.5;
+        rCtx.stroke();
+
+        // Label positioning
+        rCtx.save();
+        rCtx.translate(cx, cy);
+        rCtx.rotate(startAng + arc / 2);
+        rCtx.fillStyle = '#ffffff';
+        rCtx.font = 'black 11px monospace';
+        rCtx.textAlign = 'right';
+        rCtx.fillText(seg.name, r - 15, 4);
+        rCtx.restore();
+      });
+    }
+
+    function spinRouletteWheel() {
+      if (rIsSpinning) return;
+      if (globalCoins < 15) {
+        showToast("코인이 부족합니다! 충전 단추를 누르세요.");
+        return;
+      }
+
+      globalCoins -= 15;
+      updateGlobalCoinsUI();
+      rIsSpinning = true;
+
+      // Random high initial speed
+      rSpeed = 0.4 + Math.random() * 0.3; 
+      document.getElementById('roulette-status-text').className = "text-center text-xs font-black text-amber-500 animate-pulse mt-4 min-h-[18px]";
+      document.getElementById('roulette-status-text').innerText = "⚡ 피버 룰렛 회전 중!! 과연 결과는?";
+
+      animateRouletteSpin();
+    }
+
+    function animateRouletteSpin() {
+      rAngle += rSpeed;
+      rSpeed *= 0.982; // exponential deceleration
+
+      // Sound trigger based on angle segments
+      if (Math.abs(rSpeed) > 0.015) {
+        const segCount = rSegments.length;
+        const currentSegIdx = Math.floor((rAngle % (Math.PI * 2)) / ((Math.PI * 2) / segCount));
+        if (window.prevSegIdx !== currentSegIdx) {
+          playBeep(1200, 0.02);
+          window.prevSegIdx = currentSegIdx;
+        }
+      }
+
+      drawRouletteWheel();
+
+      if (rSpeed < 0.002) {
+        // Halt and evaluate target
+        rSpeed = 0;
+        rIsSpinning = false;
+        evaluateRouletteResult();
+      } else {
+        requestAnimationFrame(animateRouletteSpin);
+      }
+    }
+
+    function evaluateRouletteResult() {
+      const statusText = document.getElementById('roulette-status-text');
+      statusText.className = "text-center text-xs font-black mt-4 min-h-[18px] ";
+
+      // Center pointer is at top (-90 deg or 1.5 * PI)
+      // Angle goes clockwise. Calculate segment relative to 12 o'clock position (1.5 * PI)
+      const arc = (Math.PI * 2) / rSegments.length;
+      
+      // Normalized offset rotation
+      let normAngle = (1.5 * Math.PI - rAngle) % (Math.PI * 2);
+      if (normAngle < 0) normAngle += Math.PI * 2;
+
+      const winningIndex = Math.floor(normAngle / arc) % rSegments.length;
+      const result = rSegments[winningIndex];
+
+      if (result.val > 0) {
+        globalCoins += result.val;
+        updateGlobalCoinsUI();
+        playFanfare(result.val >= 100);
+        statusText.className += "text-emerald-500 animate-bounce";
+        statusText.innerText = `🎉 축하합니다! ${result.name} 당첨! +${result.val} 코인 수령!`;
+        showToast(`${result.name} 당첨으로 ${result.val} 코인 충전 완료!`);
+      } else {
+        playBeep(200, 0.4);
+        statusText.className += "text-slate-400";
+        statusText.innerText = "💣 아쉬운 꽝! 다시 잭팟에 도전해 보세요!";
+        showToast("다음 찬스에 꼭 당첨되시길 바랍니다!");
+      }
+    }
+
+    /* ==========================================================================
+       MINESWEEPER GAME ENGINE
+       ========================================================================== */
+    let minesweeperConfig = {
+      easy: { rows: 9, cols: 9, mines: 10 },
+      medium: { rows: 16, cols: 16, mines: 40 }
+    };
+
+    let currentDifficulty = 'easy';
+    let board = [];
+    let gameActive = false;
+    let timerVal = 0;
+    let timerInterval = null;
+    let minesRemaining = 10;
+    let firstClickSafe = true; 
+    let interactionMode = 'reveal'; 
+
+    function setInteractionMode(mode) {
+      interactionMode = mode;
+      const revealBtn = document.getElementById('mode-reveal');
+      const flagBtn = document.getElementById('mode-flag');
+
+      if (mode === 'reveal') {
+        revealBtn.className = "px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all bg-white dark:bg-red-900 text-red-600 dark:text-red-100 shadow-md";
+        flagBtn.className = "px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all text-slate-500 dark:text-red-300/70 hover:bg-white/50 dark:hover:bg-red-950/50";
+      } else {
+        flagBtn.className = "px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all bg-white dark:bg-red-900 text-red-600 dark:text-red-100 shadow-md";
+        revealBtn.className = "px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all text-slate-500 dark:text-red-300/70 hover:bg-white/50 dark:hover:bg-red-950/50";
+      }
+    }
+
+    function setDifficulty(diff) {
+      currentDifficulty = diff;
+      const easyBtn = document.getElementById('diff-easy');
+      const mediumBtn = document.getElementById('diff-medium');
+
+      if (diff === 'easy') {
+        easyBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-red-600 text-white shadow-sm";
+        mediumBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-600 dark:bg-red-950/30 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30";
+      } else {
+        mediumBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-red-600 text-white shadow-sm";
+        easyBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-600 dark:bg-red-950/30 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30";
+      }
+      resetMinesweeper();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerVal = 0;
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timerVal++;
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function updateTimerDisplay() {
+      const formatted = String(timerVal).padStart(3, '0');
+      document.getElementById('timer-text').innerText = formatted;
+    }
+
+    function updateMinesDisplay() {
+      const formatted = String(Math.max(0, minesRemaining)).padStart(3, '0');
+      document.getElementById('mines-left-text').innerText = formatted;
+    }
+
+    function resetMinesweeper() {
+      stopTimer();
+      timerVal = 0;
+      updateTimerDisplay();
+
+      const config = minesweeperConfig[currentDifficulty];
+      minesRemaining = config.mines;
+      updateMinesDisplay();
+
+      board = [];
+      gameActive = true;
+      firstClickSafe = true;
+
+      document.getElementById('minesweeper-overlay').classList.add('hidden');
+
+      for (let r = 0; r < config.rows; r++) {
+        let row = [];
+        for (let c = 0; c < config.cols; c++) {
+          row.push({
+            row: r,
+            col: c,
+            isMine: false,
+            isRevealed: false,
+            isFlagged: false,
+            neighborCount: 0
+          });
+        }
+        board.push(row);
+      }
+
+      renderMinesweeperBoard();
+    }
+
+    function generateMines(excludeRow, excludeCol) {
+      const config = minesweeperConfig[currentDifficulty];
+      let minesPlaced = 0;
+
+      while (minesPlaced < config.mines) {
+        let r = Math.floor(Math.random() * config.rows);
+        let c = Math.floor(Math.random() * config.cols);
+
+        if ((r !== excludeRow || c !== excludeCol) && !board[r][c].isMine) {
+          board[r][c].isMine = true;
+          minesPlaced++;
+        }
+      }
+
+      calculateNeighbors();
+    }
+
+    function calculateNeighbors() {
+      const config = minesweeperConfig[currentDifficulty];
+
+      for (let r = 0; r < config.rows; r++) {
+        for (let c = 0; c < config.cols; c++) {
+          if (board[r][c].isMine) continue;
+
+          let count = 0;
+          for (let dr = -1; dr <= 1; dr++) {
+            for (let dc = -1; dc <= 1; dc++) {
+              let nr = r + dr;
+              let nc = c + dc;
+              if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) {
+                if (board[nr][nc].isMine) count++;
+              }
+            }
+          }
+          board[r][c].neighborCount = count;
+        }
+      }
+    }
+
+    function renderMinesweeperBoard() {
+      const grid = document.getElementById('minesweeper-grid');
+      const config = minesweeperConfig[currentDifficulty];
+
+      grid.innerHTML = '';
+      grid.style.gridTemplateColumns = `repeat(${config.cols}, minmax(0, 1fr))`;
+
+      let cellSizeClass = currentDifficulty === 'easy' ? 'w-9 h-9 sm:w-11 sm:h-11 text-base' : 'w-7 h-7 sm:w-8 sm:h-8 text-xs';
+
+      for (let r = 0; r < config.rows; r++) {
+        for (let c = 0; c < config.cols; c++) {
+          const cell = board[r][c];
+          const cellBtn = document.createElement('button');
+          cellBtn.id = `cell-${r}-${c}`;
+          cellBtn.className = `mine-cell ${cellSizeClass} rounded-lg font-black flex items-center justify-center transition-all focus:outline-none shadow-sm `;
+          
+          if (cell.isRevealed) {
+            cellBtn.className += "bg-white dark:bg-red-950/40 border border-red-100 dark:border-red-950 text-slate-800 dark:text-red-100";
+            if (cell.isMine) {
+              cellBtn.innerHTML = '<i class="fa-solid fa-bomb text-red-600 animate-pulse"></i>';
+              cellBtn.className += " bg-red-200 dark:bg-red-900/60";
+            } else if (cell.neighborCount > 0) {
+              cellBtn.innerText = cell.neighborCount;
+              cellBtn.className += ` ${getNeighborColorClass(cell.neighborCount)}`;
+            }
+          } else {
+            cellBtn.className += "bg-red-200 hover:bg-red-300 dark:bg-red-900/70 dark:hover:bg-red-800/80 text-transparent border border-red-300 dark:border-red-950";
+            if (cell.isFlagged) {
+              cellBtn.innerHTML = '<i class="fa-solid fa-flag text-rose-500 animate-bounce"></i>';
+            }
+          }
+
+          cellBtn.addEventListener('click', (e) => {
+            if (interactionMode === 'reveal') {
+              handleCellReveal(r, c);
+            } else {
+              handleCellFlag(r, c);
+            }
+          });
+
+          cellBtn.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            handleCellFlag(r, c);
+          });
+
+          grid.appendChild(cellBtn);
+        }
+      }
+    }
+
+    function getNeighborColorClass(count) {
+      const colors = {
+        1: 'text-blue-600 dark:text-blue-400',
+        2: 'text-green-600 dark:text-green-400',
+        3: 'text-red-500 dark:text-red-400',
+        4: 'text-purple-600 dark:text-purple-400',
+        5: 'text-amber-600 dark:text-amber-400',
+        6: 'text-cyan-600 dark:text-cyan-400',
+        7: 'text-pink-600 dark:text-pink-400',
+        8: 'text-slate-800 dark:text-slate-200'
+      };
+      return colors[count] || '';
+    }
+
+    function handleCellReveal(row, col) {
+      if (!gameActive) return;
+
+      let cell = board[row][col];
+      if (cell.isRevealed || cell.isFlagged) return;
+
+      if (firstClickSafe) {
+        firstClickSafe = false;
+        generateMines(row, col);
+        startTimer();
+      }
+
+      cell.isRevealed = true;
+
+      if (cell.isMine) {
+        endGame(false);
+        return;
+      }
+
+      if (cell.neighborCount === 0) {
+        revealCascade(row, col);
+      }
+
+      checkWinCondition();
+      renderMinesweeperBoard();
+    }
+
+    function revealCascade(row, col) {
+      const config = minesweeperConfig[currentDifficulty];
+
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          let nr = row + dr;
+          let nc = col + dc;
+
+          if (nr >= 0 && nr < config.rows && nc >= 0 && nc < config.cols) {
+            let neighbor = board[nr][nc];
+            if (!neighbor.isRevealed && !neighbor.isMine && !neighbor.isFlagged) {
+              neighbor.isRevealed = true;
+              if (neighbor.neighborCount === 0) {
+                revealCascade(nr, nc);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function handleCellFlag(row, col) {
+      if (!gameActive) return;
+
+      let cell = board[row][col];
+      if (cell.isRevealed) return;
+
+      cell.isFlagged = !cell.isFlagged;
+      minesRemaining += cell.isFlagged ? -1 : 1;
+
+      updateMinesDisplay();
+      renderMinesweeperBoard();
+    }
+
+    function checkWinCondition() {
+      const config = minesweeperConfig[currentDifficulty];
+      let won = true;
+
+      for (let r = 0; r < config.rows; r++) {
+        for (let c = 0; c < config.cols; c++) {
+          const cell = board[r][c];
+          if (!cell.isMine && !cell.isRevealed) {
+            won = false;
+            break;
+          }
+        }
+      }
+
+      if (won) {
+        endGame(true);
+      }
+    }
+
+    function endGame(isWin) {
+      gameActive = false;
+      stopTimer();
+
+      if (!isWin) {
+        const config = minesweeperConfig[currentDifficulty];
+        for (let r = 0; r < config.rows; r++) {
+          for (let c = 0; c < config.cols; c++) {
+            if (board[r][c].isMine) {
+              board[r][c].isRevealed = true;
+            }
+          }
+        }
+        renderMinesweeperBoard();
+      }
+
+      const overlay = document.getElementById('minesweeper-overlay');
+      const iconBg = document.getElementById('overlay-icon-bg');
+      const icon = document.getElementById('overlay-icon');
+      const title = document.getElementById('overlay-title');
+      const desc = document.getElementById('overlay-desc');
+
+      if (isWin) {
+        iconBg.className = "w-20 h-20 rounded-full bg-gradient-to-tr from-green-500 to-emerald-500 flex items-center justify-center text-white text-3xl mb-4 glow-red";
+        icon.className = "fa-solid fa-trophy";
+        title.innerText = "지뢰제거 완수 성공!";
+        desc.innerText = `축하합니다! ${timerVal}초 만에 모든 지뢰 구역을 우회하여 맵 안전을 확보했습니다. 대단한 순발력입니다!`;
+        showToast("축하합니다! 지뢰찾기를 정복했습니다!");
+      } else {
+        iconBg.className = "w-20 h-20 rounded-full bg-gradient-to-tr from-red-600 to-rose-600 flex items-center justify-center text-white text-3xl mb-4 glow-red";
+        icon.className = "fa-solid fa-bomb";
+        title.innerText = "게임 오버...";
+        desc.innerText = "앗! 땅속에 숨겨진 차기 지뢰를 건드렸습니다. 조심스럽게 다시 도전해 보세요!";
+        showToast("지뢰가 폭발했습니다. 다시 시작해 보세요!");
+      }
+
+      setTimeout(() => {
+        overlay.classList.remove('hidden');
+      }, 500);
+    }
+
+    /* ==========================================================================
+       GUESTBOOK CONTROLLER
+       ========================================================================== */
+    const commentForm = document.getElementById('comment-form');
+    const commentsBoard = document.getElementById('comments-board');
+    const noCommentsPlaceholder = document.getElementById('no-comments');
+    const commentCountText = document.getElementById('comment-count');
+
+    let comments = [
+      { id: 1, author: "정보부장 최현우", text: "파이크래프트 지뢰찾기 난이도 대박이다! 급식봇 디자인도 너무 멋져.", date: "2026.05.28" },
+      { id: 2, author: "김철수 선생님", text: "동아리에서 늘 적극적인 모습 최고다. 이번 지뢰찾기 로직 구현도 수준급이구나.", date: "2026.05.29" }
+    ];
+
+    function renderComments() {
+      if (comments.length === 0) {
+        noCommentsPlaceholder.classList.remove('hidden');
+        commentCountText.innerText = "0개의 글";
+        return;
+      }
+
+      noCommentsPlaceholder.classList.add('hidden');
+      commentCountText.innerText = `${comments.length}개의 글`;
+      
+      commentsBoard.innerHTML = '';
+
+      comments.slice().reverse().forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.className = 'bg-white dark:bg-red-950/20 p-5 rounded-2xl border border-red-100 dark:border-red-950/45 flex flex-col justify-between hover:border-red-300 dark:hover:border-red-800 transition-all shadow-sm dark:shadow-none';
+        
+        commentDiv.innerHTML = `
+          <div class="flex justify-between items-start">
+            <span class="font-bold text-red-600 dark:text-red-400 text-sm flex items-center gap-1.5">
+              <i class="fa-regular fa-user text-xs"></i> ${escapeHTML(comment.author)}
+            </span>
+            <span class="text-[10px] text-slate-400 dark:text-red-300/40">${comment.date}</span>
+          </div>
+          <p class="text-sm text-slate-700 dark:text-red-100 mt-2.5 leading-relaxed">${escapeHTML(comment.text)}</p>
+        `;
+        commentsBoard.appendChild(commentDiv);
+      });
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[tag] || tag)
+      );
+    }
+
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const authorInput = document.getElementById('comment-author');
+      const textInput = document.getElementById('comment-text');
+
+      const today = new Date();
+      const dateString = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+      const newComment = {
+        id: Date.now(),
+        author: authorInput.value.trim(),
+        text: textInput.value.trim(),
+        date: dateString
+      };
+
+      comments.push(newComment);
+      renderComments();
+
+      authorInput.value = '';
+      textInput.value = '';
+
+      showToast("메시지가 등록되었습니다!");
+    });
+
+    // Mobile Navbar toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Theme switching logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeIconMobile = document.getElementById('theme-icon-mobile');
+
+    function updateThemeUI(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        themeIconMobile.classList.remove('fa-sun');
+        themeIconMobile.classList.add('fa-moon');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        themeIconMobile.classList.remove('fa-moon');
+        themeIconMobile.classList.add('fa-sun');
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      updateThemeUI(!isDark);
+      showToast(!isDark ? "다크 모드가 켜졌습니다." : "라이트 모드가 켜졌습니다.");
+    }
+
+    themeToggleBtn.addEventListener('click', toggleTheme);
+    themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+    function initThemeIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        themeIcon.classList.add('fa-moon');
+        themeIconMobile.classList.add('fa-moon');
+      } else {
+        themeIcon.classList.add('fa-sun');
+        themeIconMobile.classList.add('fa-sun');
